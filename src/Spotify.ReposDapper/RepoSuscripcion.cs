@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Spotify.ReposDapper;
 
 public class RepoSuscripcion : RepoGenerico, IRepoRegistro
@@ -5,7 +7,7 @@ public class RepoSuscripcion : RepoGenerico, IRepoRegistro
     public RepoSuscripcion(IDbConnection conexion) 
         : base(conexion) {}
 
-    public uint Alta(Registro registro)
+    public async Task<uint> Alta(Registro registro)
     {
         var parametros = new DynamicParameters();
         parametros.Add("@unidSuscripcion", direction : ParameterDirection.Output);
@@ -14,17 +16,17 @@ public class RepoSuscripcion : RepoGenerico, IRepoRegistro
         parametros.Add("@unFechaInicio", registro.FechaInicio);
         
         
-        _conexion.Execute("altaRegistroSuscripcion", parametros, commandType: CommandType.StoredProcedure);
+        await _conexion.ExecuteAsync("altaRegistroSuscripcion", parametros, commandType: CommandType.StoredProcedure);
 
         registro.idSuscripcion = parametros.Get<uint>("@unidSuscripcion");
         return registro.idSuscripcion;
     }
 
-    public Registro DetalleDe(uint idSuscripcion)
+    public async Task<Registro> DetalleDe(uint idSuscripcion)
     {
        var BuscarPorIdRegistro = @"SELECT * FROM Suscripcion Where idSuscripcion = @idSuscripcion";
 
-       var Registro = _conexion.QueryFirstOrDefault<Registro>(BuscarPorIdRegistro, new {idSuscripcion});
+       var Registro = await _conexion.QueryFirstOrDefaultAsync<Registro>(BuscarPorIdRegistro, new {idSuscripcion});
 
        return Registro;
     }

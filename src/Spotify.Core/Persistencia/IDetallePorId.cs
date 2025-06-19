@@ -11,5 +11,5 @@ namespace Spotify.Core.Persistencia;
 ///busqueda que acepta argumentos de cualquier tipo osea que puedes buscar cualquier cosa dentro de la CRUD
 public interface IDetallePorId <T, N> where N : IBinaryNumber<N>
 {
-    T? DetalleDe (N id);
+    Task<T?> DetalleDe (N id);
 }
