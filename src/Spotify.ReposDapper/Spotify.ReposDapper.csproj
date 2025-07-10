@@ -5,9 +5,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.35" />
+    <ProjectReference Include="..\Spotify.Core\Spotify.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Spotify.Core\Spotify.Core.csproj" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
   </ItemGroup>
 </Project>

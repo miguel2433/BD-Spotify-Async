@@ -42,5 +42,6 @@ public class RepoGeneroAsync : RepoGenerico, IRepoGeneroAsync
     }
 
 
-    public IList<Genero> Obtener() => EjecutarSPConReturnDeTipoLista<Genero>("ObtenerGeneros").ToList();
+    public Task<IEnumerable<Genero>> Obtener() => EjecutarSPConReturnDeTipoEnumerableAsync<Genero>("ObtenerGeneros");
+
 }
