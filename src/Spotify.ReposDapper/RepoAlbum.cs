@@ -36,7 +36,7 @@ public class RepoAlbum : RepoGenerico, IRepoAlbum
         _conexion.Execute(eliminarAlbum, new {idAlbum});
     }
 
-    public IList<Album> Obtener() => EjecutarSPConReturnDeTipoLista<Album>("ObtenerAlbum").ToList();
+    public List<Album> Obtener() => EjecutarSPConReturnDeTipoLista<Album>("ObtenerAlbum").ToList();
 
 
 }

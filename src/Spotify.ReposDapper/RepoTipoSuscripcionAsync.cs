@@ -35,6 +35,9 @@ public class RepoTipoSuscripcionAsync : RepoGenerico, IRepoTipoSuscripcionAsync
         return TipoSuscripcion;
     }
 
-    public IList<TipoSuscripcion> Obtener() => EjecutarSPConReturnDeTipoLista<TipoSuscripcion>("ObtenerTipoSuscripciones").ToList();
+    public async Task<List<TipoSuscripcion>> Obtener() {
+        var task = await EjecutarSPConReturnDeTipoListaAsync<TipoSuscripcion>("ObtenerTipoSuscripciones");
+        return task.ToList();
+        }
 
 }

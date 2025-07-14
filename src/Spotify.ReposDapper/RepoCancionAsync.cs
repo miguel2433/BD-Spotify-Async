@@ -43,7 +43,10 @@ public class RepoCancionAsync : RepoGenerico, IRepoCancionAsync
     }
 
 
-    public IList<Cancion> Obtener() => EjecutarSPConReturnDeTipoLista<Cancion>("ObtenerCanciones").ToList();
+    public async Task<List<Cancion>> Obtener() {
+        var task = await EjecutarSPConReturnDeTipoListaAsync<Cancion>("ObtenerCanciones");
+        return task.ToList();
+        }
 
 
 }

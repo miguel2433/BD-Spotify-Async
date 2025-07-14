@@ -16,6 +16,7 @@ builder.Services.AddScoped<IDbConnection>(sp => new MySqlConnection(connectionSt
 
 //Cada vez que necesite la interfaz, se va a instanciar automaticamente AdoDapper y se va a pasar al metodo de la API
 builder.Services.AddScoped<IRepoGeneroAsync, RepoGeneroAsync>();
+builder.Services.AddScoped<IRepoNacionalidadAsync, RepoNacionalidadAsync>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,11 +32,46 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-//Para un GET en la ruta "/todoitems", 
+
+app.MapGet("/nacionalidad", async (IRepoNacionalidadAsync repo) => 
+    await repo.Obtener()
+        is List<Nacionalidad> ListaNacionalidades
+            ? Results.Ok(ListaNacionalidades)
+            : Results.NotFound());
+
+app.MapGet("/nacionalidad/{id}", async (IRepoNacionalidadAsync repo, uint id) => 
+    await repo.DetalleDe(id)
+        is Nacionalidad nacionalidad 
+            ? Results.Ok(nacionalidad)
+            : Results.NotFound()
+
+);
+
+app.MapPost("/nacionalidad", async (IRepoNacionalidadAsync repo, Nacionalidad nacionalidad) => 
+{  
+    await repo.Alta(nacionalidad);
+
+    return Results.Created($"/genero/{nacionalidad.idNacionalidad}", nacionalidad);   
+});
+
 app.MapGet("/genero", async (IRepoGeneroAsync repo) => 
-    await repo.Obtener());
+    await repo.Obtener()
+        is List<Genero> ListaDeGeneros
+            ? Results.Ok(ListaDeGeneros)
+            : Results.NotFound());
 
-app.MapGet("/genero/{id}", async (IRepoGeneroAsync repo, byte id) => await repo.DetalleDe(id));
+app.MapGet("/genero/{id}", async (IRepoGeneroAsync repo, byte id) => 
+    await repo.DetalleDe(id)
+        is Genero genero 
+            ? Results.Ok(genero)
+            : Results.NotFound()
 
-app.MapPost("/genero", async (IRepoGeneroAsync repo, Genero genero) => await repo.Alta(genero));
+);
+
+app.MapPost("/genero", async (IRepoGeneroAsync repo, Genero genero) => 
+{  
+    await repo.Alta(genero);
+
+    return Results.Created($"/genero/{genero.idGenero}", genero);   
+});
 app.Run();

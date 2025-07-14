@@ -27,7 +27,7 @@ public class RepoGenero : RepoGenerico, IRepoGenero
         return Buscar;
     }
 
-    public  void Eliminar(uint idGenero)
+    public void Eliminar(uint idGenero)
     {
         string eliminarHistorialReproducciones = @"
             DELETE FROM HistorialReproducción 
@@ -42,5 +42,5 @@ public class RepoGenero : RepoGenerico, IRepoGenero
     }
 
 
-    public IList<Genero> Obtener() => EjecutarSPConReturnDeTipoLista<Genero>("ObtenerGeneros").ToList();
+    public List<Genero> Obtener() => EjecutarSPConReturnDeTipoLista<Genero>("ObtenerGeneros").ToList();
 }

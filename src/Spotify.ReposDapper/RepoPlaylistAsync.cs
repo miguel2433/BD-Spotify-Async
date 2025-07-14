@@ -31,9 +31,13 @@ public class RepoPlaylistAsync : RepoGenerico, IRepoPlaylistAsync
         return Buscar; 
     }
 
-    public IList<PlayList> Obtener () => EjecutarSPConReturnDeTipoLista<PlayList>("ObtenerPlayLists").ToList();
+    public async Task<List<PlayList>> Obtener () { 
+        var task = await EjecutarSPConReturnDeTipoListaAsync<PlayList>("ObtenerPlayLists");
+        return task.ToList();
+    }
+
     
-    public async Task<IList<Cancion>?> DetallePlaylist(uint idPlaylist)
+    public async Task<List<Cancion>?> DetallePlaylist(uint idPlaylist)
     {
         var consultaExistenciaPlaylist = "SELECT COUNT(*) FROM Playlist WHERE idPlaylist = @idPlaylist";
         var noExiste = await  _conexion.ExecuteScalarAsync<int>(consultaExistenciaPlaylist, new { idPlaylist }) == 0;

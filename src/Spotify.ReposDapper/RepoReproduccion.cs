@@ -12,7 +12,7 @@ public class RepoReproduccion : RepoGenerico, IRepoReproduccion
         parametros.Add("@unidUsuario", reproduccion.usuario.idUsuario);
         parametros.Add("@unidCancion", reproduccion.cancion.idCancion);
         parametros.Add("@unFechaReproduccion", reproduccion.FechaReproduccion);
-         _conexion.Execute("altaHistorial_reproduccion", parametros, commandType: CommandType.StoredProcedure);
+        _conexion.Execute("altaHistorial_reproduccion", parametros, commandType: CommandType.StoredProcedure);
 
         reproduccion.IdHistorial = parametros.Get<uint>("@unidHistorial");
 
@@ -28,5 +28,5 @@ public class RepoReproduccion : RepoGenerico, IRepoReproduccion
         return Buscar;
     }
 
-    public IList<Reproduccion> Obtener() => EjecutarSPConReturnDeTipoLista<Reproduccion>("ObtenerHistorialReproduccion").ToList();
+    public List<Reproduccion> Obtener() => EjecutarSPConReturnDeTipoLista<Reproduccion>("ObtenerHistorialReproduccion").ToList();
 }

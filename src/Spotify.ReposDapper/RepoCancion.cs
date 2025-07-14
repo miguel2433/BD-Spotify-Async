@@ -41,7 +41,7 @@ public class RepoCancion : RepoGenerico, IRepoCancion
     }
 
 
-    public IList<Cancion> Obtener() => EjecutarSPConReturnDeTipoLista<Cancion>("ObtenerCanciones").ToList();
+    public List<Cancion> Obtener() => EjecutarSPConReturnDeTipoLista<Cancion>("ObtenerCanciones").ToList();
 
 
 }

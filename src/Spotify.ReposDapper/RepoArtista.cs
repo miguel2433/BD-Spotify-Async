@@ -31,7 +31,7 @@ public class RepoArtista : RepoGenerico, IRepoArtista
         _conexion.Execute(eliminarArtista, new { idArtista });
     }
 
-    public IList<Artista> Obtener() => EjecutarSPConReturnDeTipoLista<Artista>("ObtenerArtistas").ToList();
+    public List<Artista> Obtener() => EjecutarSPConReturnDeTipoLista<Artista>("ObtenerArtistas").ToList();
 
     public  Artista? DetalleDe(uint idArtista)
     {

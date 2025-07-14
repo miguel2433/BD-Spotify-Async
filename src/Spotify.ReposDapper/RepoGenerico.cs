@@ -11,7 +11,10 @@ public abstract class RepoGenerico
     public IEnumerable<T> EjecutarSPConReturnDeTipoLista<T>(string nombreSP, DynamicParameters? parametros = null)
         => _conexion.Query<T>(nombreSP, param: parametros, commandType: CommandType.StoredProcedure);
         
-        public async Task<IEnumerable<T>> EjecutarSPConReturnDeTipoEnumerableAsync<T>(string nombreSP, DynamicParameters? parametros = null)
-        => await _conexion.QueryAsync<T>(nombreSP, param: parametros , commandType: CommandType.StoredProcedure);
+        public async Task<List<T>> EjecutarSPConReturnDeTipoListaAsync<T>(string nombreSP, DynamicParameters? parametros = null)
+        {
+        var task = await _conexion.QueryAsync<T>(nombreSP, param: parametros , commandType: CommandType.StoredProcedure);
+        return task.ToList();
+        } 
 }
     

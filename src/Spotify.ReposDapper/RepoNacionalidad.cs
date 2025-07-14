@@ -28,5 +28,5 @@ public class RepoNacionalidad : RepoGenerico, IRepoNacionalidad
         return Buscar;
     }
 
-    public IList<Nacionalidad> Obtener () => EjecutarSPConReturnDeTipoLista<Nacionalidad>("ObtenerNacionalidades").ToList();
+    public List<Nacionalidad> Obtener () => EjecutarSPConReturnDeTipoLista<Nacionalidad>("ObtenerNacionalidades").ToList();
 }

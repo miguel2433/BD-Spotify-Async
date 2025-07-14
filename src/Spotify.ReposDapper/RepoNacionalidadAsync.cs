@@ -1,4 +1,6 @@
 
+using System.Threading.Tasks;
+
 namespace Spotify.ReposDapper;
 
 public class RepoNacionalidadAsync : RepoGenerico, IRepoNacionalidadAsync
@@ -28,5 +30,9 @@ public class RepoNacionalidadAsync : RepoGenerico, IRepoNacionalidadAsync
         return Buscar;
     }
 
-    public IList<Nacionalidad> Obtener () => EjecutarSPConReturnDeTipoLista<Nacionalidad>("ObtenerNacionalidades").ToList();
+    public async Task<List<Nacionalidad>> Obtener () { 
+        
+        var task = await EjecutarSPConReturnDeTipoListaAsync<Nacionalidad>("ObtenerNacionalidades");
+        return task.ToList();
+    }
 }

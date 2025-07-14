@@ -30,5 +30,5 @@ public class RepoUsuario : RepoGenerico, IRepoUsuario
         return usuario;
     }
 
-    public IList<Usuario> Obtener() => EjecutarSPConReturnDeTipoLista<Usuario>("ObtenerUsuarios").ToList();
+    public List<Usuario> Obtener() => EjecutarSPConReturnDeTipoLista<Usuario>("ObtenerUsuarios").ToList();
 }

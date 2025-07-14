@@ -30,7 +30,7 @@ public class RepoPlaylist : RepoGenerico, IRepoPlaylist
         return Buscar; 
     }
 
-    public IList<PlayList> Obtener () => EjecutarSPConReturnDeTipoLista<PlayList>("ObtenerPlayLists").ToList();
+    public List<PlayList> Obtener () => EjecutarSPConReturnDeTipoLista<PlayList>("ObtenerPlayLists").ToList();
     
     public  IList<Cancion>? DetallePlaylist(uint idPlaylist)
     {
