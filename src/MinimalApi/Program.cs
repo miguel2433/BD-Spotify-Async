@@ -17,6 +17,7 @@ builder.Services.AddScoped<IDbConnection>(sp => new MySqlConnection(connectionSt
 //Cada vez que necesite la interfaz, se va a instanciar automaticamente AdoDapper y se va a pasar al metodo de la API
 builder.Services.AddScoped<IRepoGeneroAsync, RepoGeneroAsync>();
 builder.Services.AddScoped<IRepoNacionalidadAsync, RepoNacionalidadAsync>();
+builder.Services.AddScoped<IRepoAlbumAsync, RepoAlbumAsync>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -74,4 +75,11 @@ app.MapPost("/genero", async (IRepoGeneroAsync repo, Genero genero) =>
 
     return Results.Created($"/genero/{genero.idGenero}", genero);   
 });
+
+app.MapGet("/album/{id}", async(IRepoAlbumAsync repo, uint id) =>
+    await repo.DetalleDe(id)
+        is Album album
+        ? Results.Ok(album)
+        : Results.NotFound()
+);
 app.Run();

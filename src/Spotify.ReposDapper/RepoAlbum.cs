@@ -22,6 +22,7 @@ public class RepoAlbum : RepoGenerico, IRepoAlbum
     {
         string consultarAlbum = @"SELECT * FROM Album WHERE idAlbum = @idAlbum";
 
+        
         var album =  _conexion.QuerySingleOrDefault<Album>(consultarAlbum, new {idAlbum});
 
         return album;

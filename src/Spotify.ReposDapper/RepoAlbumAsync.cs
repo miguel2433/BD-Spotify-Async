@@ -20,14 +20,29 @@ public class RepoAlbumAsync : RepoGenerico, IRepoAlbumAsync
         return album.idAlbum;
     }
 
-    public async Task<Album?> DetalleDe(uint idAlbum)
-    {
-        string consultarAlbum = @"SELECT * FROM Album WHERE idAlbum = @idAlbum";
+public async Task<Album?> DetalleDe(uint idAlbum)
+{
+    string sql = @"
+        SELECT 
+            a.idAlbum, a.Titulo, a.idArtista,
+            ar.idArtista, ar.Nombre, ar.Apellido, ar.NombreArtistico
+        FROM Album a
+        JOIN Artista ar ON a.idArtista = ar.idArtista
+        WHERE a.idAlbum = @idAlbum";
 
-        var album = await _conexion.QuerySingleOrDefaultAsync<Album>(consultarAlbum, new {idAlbum});
+    var resultado = await _conexion.QueryAsync<Album, Artista, Album>(
+        sql,
+        (album, artista) =>
+        {
+            album.artista = artista;
+            return album;
+        },
+        new { idAlbum },
+        splitOn: "idArtista" // importante para que Dapper sepa dónde empieza el segundo objeto
+    );
 
-        return album;
-    }
+    return resultado.FirstOrDefault();
+}
 
     public async Task Eliminar(uint idAlbum)
     {
