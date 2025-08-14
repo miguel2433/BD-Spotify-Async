@@ -4,6 +4,7 @@ using Scalar.AspNetCore;
 using Spotify.Core;
 using Spotify.ReposDapper;
 using Spotify.Core.Persistencia;
+using DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,22 +38,27 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/nacionalidad", async (IRepoNacionalidadAsync repo) => 
     await repo.Obtener()
         is List<Nacionalidad> ListaNacionalidades
-            ? Results.Ok(ListaNacionalidades)
+            ? Results.Ok(ListaNacionalidades.Select(Nacionalidad  => new NacionalidadDTO(Nacionalidad.idNacionalidad,Nacionalidad.Pais)))
             : Results.NotFound());
 
 app.MapGet("/nacionalidad/{id}", async (IRepoNacionalidadAsync repo, uint id) => 
     await repo.DetalleDe(id)
         is Nacionalidad nacionalidad 
-            ? Results.Ok(nacionalidad)
+            ? Results.Ok(new NacionalidadDTO(nacionalidad.idNacionalidad, nacionalidad.Pais))
             : Results.NotFound()
 
 );
 
-app.MapPost("/nacionalidad", async (IRepoNacionalidadAsync repo, Nacionalidad nacionalidad) => 
-{  
-    await repo.Alta(nacionalidad);
+app.MapPost("/nacionalidad", async (IRepoNacionalidadAsync repo, NacionalidadAltaDTO nacionalidad) => 
+{
+    Nacionalidad nuevaNacionalidad = new Nacionalidad
+    {
+        Pais = nacionalidad.Pais
+    };
 
-    return Results.Created($"/genero/{nacionalidad.idNacionalidad}", nacionalidad);   
+    await repo.Alta(nuevaNacionalidad);
+
+    return Results.Created($"/genero/{nuevaNacionalidad.idNacionalidad}", nacionalidad);   
 });
 
 app.MapGet("/genero", async (IRepoGeneroAsync repo) => 
@@ -79,7 +85,7 @@ app.MapPost("/genero", async (IRepoGeneroAsync repo, Genero genero) =>
 app.MapGet("/album/{id}", async(IRepoAlbumAsync repo, uint id) =>
     await repo.DetalleDe(id)
         is Album album
-        ? Results.Ok(album)
+        ? Results.Ok(new AlbumDetalleDTO(album.idAlbum,album.Titulo,album.FechaLanzamiento, album.artista))
         : Results.NotFound()
 );
 app.Run();
