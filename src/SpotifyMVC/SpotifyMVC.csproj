@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Spotify.Core\Spotify.Core.csproj" />
   </ItemGroup>
 
+  <Target Name="BuildCss" BeforeTargets="Compile">
+    <Exec Command="npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/output.css --watch" />
+  </Target>
+
 </Project>
