@@ -1,0 +1,14 @@
+@using Spotify.Core
+
+@model AlbunesViewModel
+@{
+    ViewData["Title"] = "CrearAlbum";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @foreach(Album i in Model.albums){
+        <h1> @i.Titulo</h1>
+    }
+</div>

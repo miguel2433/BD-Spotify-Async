@@ -1,5 +1,5 @@
 ﻿@using Spotify.Core
-@model IEnumerable<Spotify.Core.Artista>
+@model ArtistaViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,9 +7,30 @@
 
 <div class="text-center">
     <h1 class="underline">Hello world!</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <form asp-action="Index" method="post">
+        <h1>Alta Artista</h1>
+        
+        <div>
+            <label asp-for="artista.Nombre">Nombre</label>
+            <input asp-for="artista.Nombre" placeholder="Nombre" />
+        </div>
+        <div>
+            <label asp-for="artista.Apellido">Apellido</label>
+            <input asp-for="artista.Apellido" placeholder="Apellido">
+        </div>
+        <div>
+            <label asp-for="artista.NombreArtistico">NombreArtistico</label>
+            <input asp-for="artista.NombreArtistico" placeholder="Nombre artístico" />
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <h2>Lista de Artistas</h2>
     <ul>
-    @foreach(Artista artista in Model){
-        <li>@artista.Nombre</li>
-    }
+        @foreach (var artista in Model.artistas)
+        {
+            <li>@artista.Nombre (@artista.NombreArtistico)</li>
+        }
     </ul>
+</div>

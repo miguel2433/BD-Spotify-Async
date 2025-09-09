@@ -17,6 +17,7 @@ builder.Services.AddScoped<IDbConnection>(sp => new MySqlConnection(connectionSt
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRepoArtistaAsync, RepoArtistaAsync>();
+builder.Services.AddScoped<IRepoAlbumAsync, RepoAlbumAsync>();
 
 var app = builder.Build();
 
