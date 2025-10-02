@@ -1,0 +1,35 @@
+@model SpotifyMVC.Models.CancionViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Spotify.Core
+
+
+@{
+    ViewData["Title"] = "Crear Canciones";
+}
+
+
+<h1>Canciones</h1>
+
+<div>
+    @if (Model?.canciones != null && Model.canciones.Any())
+    {
+        @foreach (Cancion cancion in Model.canciones)
+        {
+            <p>
+                @cancion.Titulo 
+                Creado por: @cancion.artista?.NombreArtistico 
+                Álbum: @cancion.album?.Titulo
+            </p>
+        }
+    }
+    else
+    {
+        <p>No hay canciones registradas.</p>
+    }
+
+    <a asp-action="CrearCancion">
+        <button type="button">Crear Canción</button>
+    </a>
+</div>
+
+

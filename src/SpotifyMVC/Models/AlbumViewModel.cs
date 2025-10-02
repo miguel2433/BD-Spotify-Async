@@ -12,7 +12,7 @@ namespace SpotifyMVC.Models
         public List<Artista> artistas { get; set; } = new();
         public string Titulo { get; set; }
         public DateTime FechaLanzamiento { get; set; } = DateTime.Now;
-        public uint ArtistaId { get; set; } // 👈 FK del artista seleccionado
+        public uint ArtistaId { get; set; }
 
     }
 }

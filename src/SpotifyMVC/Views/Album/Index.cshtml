@@ -1,6 +1,12 @@
 @model SpotifyMVC.Models.AlbumViewModel
 @using Microsoft.AspNetCore.Mvc.Rendering
 
+
+@{
+    ViewData["Title"] = "Crear Album";
+}
+
+
 <h1>Crear Álbum</h1>
 
 <form asp-action="CrearAlbum" method="post">

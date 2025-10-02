@@ -1,0 +1,41 @@
+@model CrearCancionViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+@{
+    ViewData["Title"] = "Crear Cancion";
+}
+
+
+<h1>Crear Cancion</h1>
+
+
+<form asp-action="CrearCancion" method="post">
+    <div>
+        <label asp-for="Titulo"></label>
+        <input asp-for="Titulo" placeholder="Nombre del álbum" />
+    </div>
+
+
+    <div>
+        <label>Artista</label>
+        <select asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "Nombre"))">
+            <option value="">-- Selecciona un artista --</option>
+        </select>
+    </div>
+    <div>
+        <label>Album</label>
+        <select asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
+            <option value="">-- Selecciona un album --</option>
+        </select>
+    </div>
+    <div>
+        <label>Genero</label>
+        <select asp-for="GeneroId" asp-items="@(new SelectList(Model.generos, "idGenero", "genero"))">
+            <option value="">-- Selecciona un album --</option>
+        </select>
+    </div>
+
+    
+    <button type="submit">Guardar</button>
+</form>
