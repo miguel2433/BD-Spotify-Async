@@ -16,9 +16,9 @@
         @foreach (Cancion cancion in Model.canciones)
         {
             <p>
-                @cancion.Titulo 
-                Creado por: @cancion.artista?.NombreArtistico 
-                Álbum: @cancion.album?.Titulo
+                <a asp-route-id="@cancion.idCancion" asp-action="DetalleCancion">
+                    @cancion.Titulo 
+                </a>
             </p>
         }
     }

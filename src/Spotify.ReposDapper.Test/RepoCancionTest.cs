@@ -32,7 +32,7 @@ public class RepoCancionTest : TestBase
         var InsertarCancion = new Cancion 
         {
             Titulo = "Lamento ser boliviano",
-            Duracion = new TimeSpan(0,15,2),
+            duration = new TimeSpan(0,15,2),
             album = unAlbum,
             genero = unGenero,
             artista = unArtista
@@ -54,7 +54,6 @@ public class RepoCancionTest : TestBase
     public void DetallaIdCanciones(uint idCancion)
     {
         var BuscarIdCanciones = _repoCancion.DetalleDe(idCancion);
-
         Assert.NotNull(BuscarIdCanciones);
         Assert.Equal(idCancion, BuscarIdCanciones.idCancion);
     }

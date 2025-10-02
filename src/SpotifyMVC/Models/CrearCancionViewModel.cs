@@ -10,8 +10,8 @@ namespace SpotifyMVC.Models
         public List<Artista> artistas { get; set; } = new();
         public List<Album> albums { get; set; } = new();
         public List<Genero> generos { get; set; } = new();
-        public uint ArtistaId;
-        public uint AlbumId;
-        public byte GeneroId;
+        public uint ArtistaId { get; set; }
+        public uint AlbumId { get; set; }
+        public byte GeneroId { get; set; }
     }
 }

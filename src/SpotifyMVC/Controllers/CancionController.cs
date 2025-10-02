@@ -38,7 +38,7 @@ namespace SpotifyMVC.Controllers
             return View(vm);
         }
 
-        // POST: dar de alta álbum
+        // POST: dar de alta Cancion
         [HttpPost]
         public async Task<IActionResult> CrearCancion(CrearCancionViewModel model)
         {
@@ -53,7 +53,7 @@ namespace SpotifyMVC.Controllers
                 var Cancion = new Cancion
                 {
                     Titulo = model.Titulo,
-                    Duracion = new TimeSpan(0, 12, 5),
+                    duration = new TimeSpan(0, 12, 5),
                     artista = artistaSeleccionado,
                     genero = generoSeleccionado,
                     album = albumSeleccionado
@@ -78,5 +78,11 @@ namespace SpotifyMVC.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DetalleCancion(uint id)
+        {
+            var Detalle = await repoCancion.DetalleDe(id);
+            return View(Detalle);
+        }
     }
 }

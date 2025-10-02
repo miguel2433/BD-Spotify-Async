@@ -1,0 +1,14 @@
+@model Spotify.Core.Cancion
+@{
+    ViewData["Title"] = "DetalleCancion";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <p>Titulo: @Model.Titulo</p>
+    <p>Duracion: @Model.duration.ToString(@"hh\:mm\:ss")</p>
+    <p>Genero: @Model.genero.genero</p>
+    <p>Artista: @Model.artista.NombreArtistico</p>
+    <p>Album: @Model.album.Titulo</p>
+</div>
