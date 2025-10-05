@@ -14,6 +14,7 @@ public class RepoArtistaAsync : RepoGenerico, IRepoArtistaAsync
         parametros.Add("@unNombreArtistico", artista.NombreArtistico);
         parametros.Add("@unNombre", artista.Nombre);
         parametros.Add("@unApellido", artista.Apellido);
+                parametros.Add("@unImageUrl", artista.ImageUrl);
 
         await _conexion.ExecuteAsync("altaArtista", parametros, commandType: CommandType.StoredProcedure);
 

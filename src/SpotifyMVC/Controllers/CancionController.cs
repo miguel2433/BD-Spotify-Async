@@ -56,7 +56,8 @@ namespace SpotifyMVC.Controllers
                     duration = new TimeSpan(0, 12, 5),
                     artista = artistaSeleccionado,
                     genero = generoSeleccionado,
-                    album = albumSeleccionado
+                    album = albumSeleccionado,
+                    ImageUrl = model.ImageUrl
                 };
 
                 await repoCancion.Alta(Cancion);

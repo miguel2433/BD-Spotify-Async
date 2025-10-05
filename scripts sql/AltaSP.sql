@@ -3,10 +3,10 @@ USE 5to_Spotify;
 -- Tabla Artista
 DELIMITER $$
 DROP PROCEDURE IF EXISTS altaArtista $$
-CREATE PROCEDURE altaArtista (unNombreArtistico VARCHAR(35), unNombre VARCHAR(45), unApellido VARCHAR(45), out unidArtista INT UNSIGNED)
+CREATE PROCEDURE altaArtista (unImageUrl VARCHAR(255),unNombreArtistico VARCHAR(35), unNombre VARCHAR(45), unApellido VARCHAR(45), out unidArtista INT UNSIGNED)
 BEGIN 
-    INSERT INTO Artista(NombreArtistico,Nombre,Apellido)
-   	    VALUES(unNombreArtistico,unNombre,unApellido);
+    INSERT INTO Artista(ImageUrl,NombreArtistico,Nombre,Apellido)
+   	    VALUES(unImageUrl,unNombreArtistico,unNombre,unApellido);
     
 	SET unidArtista = last_insert_id();
 END $$
@@ -16,10 +16,12 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS altaAlbum $$
 CREATE PROCEDURE altaAlbum (OUT unidAlbum INT UNSIGNED,
     unTitulo VARCHAR(45),
-    unidArtista INT UNSIGNED)
+    unidArtista INT UNSIGNED,
+	unFechaLanzamiento DATE,
+	unImageUrl VARCHAR(255))
 BEGIN 
-	INSERT INTO Album (Titulo,fechaLanzamiento,idArtista)
-		VALUES(unTitulo,CURDATE(),unidArtista);
+	INSERT INTO Album (Titulo,fechaLanzamiento,idArtista,ImageUrl)
+		VALUES(unTitulo,unFechaLanzamiento,unidArtista,unImageUrl );
 
 	SET unidAlbum = last_insert_id();
 END$$
@@ -61,10 +63,10 @@ END$$
 -- Tabla Cancion
 DELIMITER $$
 DROP PROCEDURE IF EXISTS altaCancion $$
-CREATE PROCEDURE altaCancion (OUT unidCancion INT UNSIGNED, unTitulo VARCHAR(45), unDuration Time, unidAlbum INT UNSIGNED, unidArtista INT UNSIGNED, unidGenero TINYINT UNSIGNED)
+CREATE PROCEDURE altaCancion (OUT unidCancion INT UNSIGNED,unImageUrl VARCHAR(255), unTitulo VARCHAR(45), unDuration Time, unidAlbum INT UNSIGNED, unidArtista INT UNSIGNED, unidGenero TINYINT UNSIGNED)
 BEGIN 
-	INSERT INTO Cancion(Titulo,duration,idAlbum,idArtista,idGenero)
-		VALUES(unTitulo,unDuration,unidAlbum,unidArtista,unidGenero);
+	INSERT INTO Cancion(ImageUrl,Titulo,duration,idAlbum,idArtista,idGenero)
+		VALUES(unImageUrl,unTitulo,unDuration,unidAlbum,unidArtista,unidGenero);
 	
 	SET unidCancion = last_insert_id();
 END $$
@@ -83,10 +85,10 @@ END $$
 -- Tabla Playlist
 DELIMITER $$
 DROP PROCEDURE IF EXISTS altaPlaylist $$
-CREATE PROCEDURE altaPlaylist (unNombre VARCHAR(20), unidUsuario INT UNSIGNED, out unidPlaylist INT UNSIGNED)
+CREATE PROCEDURE altaPlaylist (unImageUrl VARCHAR(255),unNombre VARCHAR(20), unidUsuario INT UNSIGNED, out unidPlaylist INT UNSIGNED)
 BEGIN
-	INSERT INTO Playlist(Nombre,idUsuario)
-	    VALUES(unNombre,unidUsuario);
+	INSERT INTO Playlist(ImageUrl,Nombre,idUsuario)
+	    VALUES(unImageUrl,unNombre,unidUsuario);
 	
     SET unidPlaylist = last_insert_id();
 END $$

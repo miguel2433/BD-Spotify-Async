@@ -12,11 +12,13 @@ public class ArtistaController : Controller
     private readonly ILogger<ArtistaController> _logger;
     private readonly IRepoArtistaAsync repoArtista;
     private readonly IRepoAlbumAsync repoAlbum;
-    public ArtistaController(ILogger<ArtistaController> logger, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
+    private readonly IWebHostEnvironment _env;
+    public ArtistaController(ILogger<ArtistaController> logger, IWebHostEnvironment env, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
     {
         this.repoAlbum = repoAlbum;
         this.repoArtista = repoArtista;
         _logger = logger;
+        _env = env;
     }
 
     public async Task<IActionResult> Index()
@@ -41,9 +43,49 @@ public class ArtistaController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> CrearArtista(Artista artista)
+    public async Task<IActionResult> CrearArtista(CrearArtistaViewModel model)
     {
-        var altaArtista = await repoArtista.Alta(artista);
+        var artista = model.artista;
+
+        var image = model.ImageUrl;
+
+        string uniqueFileName = null;
+
+        if (image != null && image.Length > 0)
+        {
+            string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            try
+            {
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+                artista.ImageUrl = uniqueFileName;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Error al guardar la imagen: " + ex.Message);
+                return View(model);
+            }
+        }
+        try
+            {
+                var idAutoIncrementado = await repoArtista.Alta(artista);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Error al crear el Artista: " + ex.Message);
+                return View(model);
+            }
+
 
         return RedirectToAction("Index");
     }

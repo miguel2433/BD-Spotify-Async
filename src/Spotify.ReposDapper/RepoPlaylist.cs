@@ -12,6 +12,7 @@ public class RepoPlaylist : RepoGenerico, IRepoPlaylist
         parametros.Add("@unidPlaylist", direction: ParameterDirection.Output);
         parametros.Add("@unNombre", playlist.Nombre);
         parametros.Add("@unidUsuario", playlist.usuario.idUsuario);
+        parametros.Add("@unImageUrl", playlist.ImageUrl);
 
 
          _conexion.Execute("altaPlaylist", parametros, commandType: CommandType.StoredProcedure);

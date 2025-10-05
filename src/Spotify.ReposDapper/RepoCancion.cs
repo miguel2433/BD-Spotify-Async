@@ -13,6 +13,7 @@ public class RepoCancion : RepoGenerico, IRepoCancion
         parametros.Add("@unidAlbum", cancion.album.idAlbum);
         parametros.Add("@unidArtista", cancion.artista.idArtista);
         parametros.Add("@unidGenero", cancion.genero.idGenero);
+                parametros.Add("@unImageUrl", cancion.ImageUrl);
 
         _conexion.Execute("altaCancion", parametros, commandType: CommandType.StoredProcedure);
 

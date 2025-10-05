@@ -12,6 +12,7 @@ public class RepoAlbum : RepoGenerico, IRepoAlbum
         parametros.Add("@unTitulo", album.Titulo);
         parametros.Add("@unFechaLanzamiento", album.fechaLanzamiento);
         parametros.Add("@unidArtista", album.artista.idArtista);
+        parametros.Add("@unImageUrl", album.ImageUrl);
 
         _conexion.Execute("altaAlbum", parametros, commandType: CommandType.StoredProcedure);
         album.idAlbum = parametros.Get<uint>("@unidAlbum");

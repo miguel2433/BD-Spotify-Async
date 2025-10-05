@@ -26,6 +26,11 @@
             <option value="">-- Selecciona un artista --</option>
         </select>
     </div>
+    <div>
+        <label asp-for="ImageUrl">Selecciona la imagen</label>
+        <input class="input-file" type="file" asp-for="ImageUrl">
+    </div>
+
 
     <button type="submit">Guardar</button>
 </form>

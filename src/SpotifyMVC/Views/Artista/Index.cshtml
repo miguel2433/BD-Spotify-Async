@@ -15,10 +15,11 @@
     {
         @foreach (Artista artista in Model)
         {
-            <p>
+            <p class="flex justify-start items-center flex-row">
                 <a asp-route-id="@artista.idArtista" asp-action="DetalleArtista">
                     @artista.NombreArtistico 
                 </a>
+                <img class="rounded-full h-8 w-8" src="/images/@artista.ImageUrl" alt="@artista.NombreArtistico">
             </p>
         }
     }

@@ -20,6 +20,7 @@ USE `5to_Spotify` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `5to_Spotify`.`Artista` (
   `idArtista` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ImageUrl` VARCHAR(255)  NULL,
   `NombreArtistico` VARCHAR(35) NULL,
   `Nombre` VARCHAR(45) NOT NULL,
   `Apellido` VARCHAR(45) NOT NULL,
@@ -37,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `5to_Spotify`.`Album` (
   `Titulo` VARCHAR(45) NOT NULL,
   `fechaLanzamiento` DATE NOT NULL,
   `idArtista` INT UNSIGNED NOT NULL,
+  `ImageUrl` VARCHAR(255)  NULL,
   PRIMARY KEY (`idAlbum`),
   INDEX `artist_id` (`idArtista` ASC) VISIBLE,
   CONSTRAINT `Albums_ibfk_1`
@@ -100,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `5to_Spotify`.`Cancion` (
   `idAlbum` INT UNSIGNED NOT NULL,
   `idArtista` INT UNSIGNED NOT NULL,
   `idGenero` TINYINT UNSIGNED NOT NULL,
+  `ImageUrl` VARCHAR(255) NULL,
   PRIMARY KEY (`idCancion`),
   INDEX `album_id` (`idAlbum` ASC) VISIBLE,
   INDEX `artist_id` (`idArtista` ASC) VISIBLE,
@@ -156,6 +159,7 @@ CREATE TABLE IF NOT EXISTS `5to_Spotify`.`Playlist` (
   `idPlaylist` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(20) NOT NULL,
   `idUsuario` INT UNSIGNED NOT NULL,
+  `ImageUrl` VARCHAR(255)  NULL,
   PRIMARY KEY (`idPlaylist`),
   INDEX `user_id` (`idUsuario` ASC) VISIBLE,
   CONSTRAINT `Playlists_ibfk_1`

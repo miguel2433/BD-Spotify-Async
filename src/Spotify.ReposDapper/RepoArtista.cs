@@ -14,6 +14,7 @@ public class RepoArtista : RepoGenerico, IRepoArtista
         parametros.Add("@unNombreArtistico", artista.NombreArtistico);
         parametros.Add("@unNombre", artista.Nombre);
         parametros.Add("@unApellido", artista.Apellido);
+        parametros.Add("@unImageUrl", artista.ImageUrl);
 
         _conexion.Execute("altaArtista", parametros, commandType: CommandType.StoredProcedure);
 

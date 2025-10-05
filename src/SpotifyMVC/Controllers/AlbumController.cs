@@ -45,7 +45,8 @@ namespace SpotifyMVC.Controllers
                 {
                     Titulo = model.Titulo,
                     fechaLanzamiento = model.FechaLanzamiento,
-                    artista = artistaSeleccionado
+                    artista = artistaSeleccionado,
+                    ImageUrl = model.ImageUrl
                 };
 
                 await repoAlbum.Alta(album);

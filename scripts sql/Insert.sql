@@ -1,16 +1,17 @@
 USE 5to_Spotify;
 
 -- Tabla Artista
- CALL altaArtista('TripleT', 'Miguel', 'Verduguez', @idArtistaTripleT);
- CALL altaArtista('El Chapo', 'Josu', 'Duran', @idArtistaElChapo);
- CALL altaArtista('La Maquinaria', 'Rene', 'Terrazas', @idArtistalaMaquinaria);
- CALL altaArtista('El Renacido', 'Leonardo', 'Cheng', @idArtistaElRenacido);
+ CALL altaArtista('some.jpg','TripleT', 'Miguel', 'Verduguez', @idArtistaTripleT);
+ CALL altaArtista('some.jpg','El Chapo', 'Josu', 'Duran', @idArtistaElChapo);
+ CALL altaArtista('some.jpg','La Maquinaria', 'Rene', 'Terrazas', @idArtistalaMaquinaria);
+ CALL altaArtista('some.jpg','El Renacido', 'Leonardo', 'Cheng', @idArtistaElRenacido);
 
 -- Tabla Album
- CALL altaAlbum (@idAlbumLuz, 'Luz y Sombra', @idArtistaTripleT);
- CALL altaAlbum (@idAlbumCaminos, 'Caminos Cruzados', @idArtistaElChapo);
- CALL altaAlbum (@idAlbumSuenios, 'Sueños de Verano', @idArtistalaMaquinaria);
- CALL altaAlbum (@idAlbumEcos, 'Ecos del Pasado', @idArtistaElRenacido);
+-- Álbumes con fechas de ejemplo
+CALL altaAlbum(@idAlbumEcos,'Ecos del Pasado',@idArtistaElRenacido,'2018-05-20','some.jpg');
+CALL altaAlbum(@idAlbumSuenios,'Sueños de Verano',@idArtistalaMaquinaria,'2019-08-10','some.jpg');
+CALL altaAlbum(@idAlbumCaminos,'Caminos Cruzados',@idArtistaElChapo,'2020-03-15','some.jpg');
+CALL altaAlbum(@idAlbumLuz,'Luz y Sombra',@idArtistaTripleT,'2021-11-05','some.jpg');
 
 -- Tabla Nacionalidad
 CALL altaNacionalidad ('Argentina', @idNacionalidadArgentina);
@@ -31,10 +32,10 @@ CALL altaGenero('Reggae', @idGeneroReggae);
 CALL altaGenero('Ranchera', @idGeneroRanchera);
 
 -- Tabla Cancion
-CALL altaCancion(@idCancionOver, 'Its Over, Isnt It', '00:02:17', @idAlbumSuenios, @idArtistaElRenacido, @idGeneroHipHop);
-CALL altaCancion(@idCancionRene, 'René', '00:07:41', @idAlbumCaminos, @idArtistaElChapo, @idGeneroJazz);
-CALL altaCancion(@idCancionEstrella, 'Como Estrella', '00:03:40', @idAlbumLuz, @idArtistalaMaquinaria, @idGeneroReggae);
-CALL altaCancion(@idCancionCelos, 'Estos Celos', '00:03:10', @idAlbumEcos, @idArtistaTripleT, @idGeneroRanchera);
+CALL altaCancion(@idCancionOver, 'some.jpg','Its Over, Isnt It', '00:02:17', @idAlbumSuenios, @idArtistaElRenacido, @idGeneroHipHop);
+CALL altaCancion(@idCancionRene, 'some.jpg','René', '00:07:41', @idAlbumCaminos, @idArtistaElChapo, @idGeneroJazz);
+CALL altaCancion(@idCancionEstrella, 'some.jpg','Como Estrella', '00:03:40', @idAlbumLuz, @idArtistalaMaquinaria, @idGeneroReggae);
+CALL altaCancion(@idCancionCelos,'some.jpg', 'Estos Celos', '00:03:10', @idAlbumEcos, @idArtistaTripleT, @idGeneroRanchera);
 
 -- Tabla Historial Reproduccion
 CALL altaHistorial_reproduccion(@idHistorialMiguel, @idUsuarioMiguel, @idCancionOver, '2024-07-01 10:00:00');
@@ -43,10 +44,10 @@ CALL altaHistorial_reproduccion(@idHistorialRene, @idUsuarioRene, @idCancionEstr
 CALL altaHistorial_reproduccion(@idHistorialCheng, @idUsuarioCheng, @idCancionCelos, '2024-07-01 13:00:00');
 
 -- Tabla Playlist
-CALL altaPlaylist('Éxitos de Rock', @idUsuarioMiguel,@idPlaylistRock);
-CALL altaPlaylist('Clásicos del Pop', @idUsuarioJosu,@idPlaylistPop);
-CALL altaPlaylist('Vibras de Jazz', @idUsuarioRene,@idPlaylistJazz);
-CALL altaPlaylist('Ritmos Chill', @idUsuarioCheng, @idPlaylistChill);
+CALL altaPlaylist('some.jpg','Éxitos de Rock', @idUsuarioMiguel,@idPlaylistRock);
+CALL altaPlaylist('some.jpg','Clásicos del Pop', @idUsuarioJosu,@idPlaylistPop);
+CALL altaPlaylist('some.jpg','Vibras de Jazz', @idUsuarioRene,@idPlaylistJazz);
+CALL altaPlaylist('some.jpg','Ritmos Chill', @idUsuarioCheng, @idPlaylistChill);
 
 -- Tabla TipoSuscripcion
 CALL altaTipoSuscripcion(@idSuscripcionMensual,1,8,"Mensual");

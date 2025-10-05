@@ -1,4 +1,4 @@
-@model Spotify.Core.Artista
+@model CrearArtistaViewModel
 @using Microsoft.AspNetCore.Mvc.Rendering
 
 
@@ -10,20 +10,24 @@
 <h1>Crear Artista</h1>
 
 
-<form asp-action="CrearArtista" method="post">
+<form asp-action="CrearArtista" enctype="multipart/form-data" method="post">
     <div>
-        <label asp-for="NombreArtistico">Nombre Artistico</label>
-        <input asp-for="NombreArtistico" placeholder="Nombre Artistico" />
+        <label asp-for="artista.NombreArtistico">Nombre Artistico</label>
+        <input asp-for="artista.NombreArtistico" placeholder="Nombre Artistico" />
     </div>
 
 
     <div>
-        <label asp-for="Nombre">Nombre del Artista</label>
-        <input asp-for="Nombre" placeholder="Nombre" />
+        <label asp-for="artista.Nombre">Nombre del Artista</label>
+        <input asp-for="artista.Nombre" placeholder="Nombre" />
     </div>
     <div>
-        <label asp-for="Apellido">Apellido del Artista</label>
-        <input asp-for="Apellido" placeholder="Apellido" />
+        <label asp-for="artista.Apellido">Apellido del Artista</label>
+        <input asp-for="artista.Apellido" placeholder="Apellido" />
     </div>
+    <div>
+        <label asp-for="ImageUrl">Selecciona la imagen</label>
+        <input class="input-file" type="file" asp-for="ImageUrl">
+    </div>  
     <button type="submit">Guardar</button>
 </form>
