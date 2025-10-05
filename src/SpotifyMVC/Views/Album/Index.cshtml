@@ -9,7 +9,11 @@
 
 <div>
     @foreach(Album album in Model){
-        <p><a asp-route-id="@album.idAlbum" asp-action="DetalleAlbum"> @album.Titulo</a></p>
+        <p class="flex flex-row">
+            <a asp-route-id="@album.idAlbum" asp-action="DetalleAlbum"> @album.Titulo</a>
+            <img class="w-8 h-8 rounded-full" src="/images/@album.ImageUrl" alt="@album.Titulo">
+        </p>
+        
     }
     <button><a asp-action="CrearAlbum">Crear Album</a></button>
 </div>

@@ -11,15 +11,18 @@ namespace SpotifyMVC.Controllers
         private readonly ILogger<AlbumController> _logger;
         private readonly IRepoArtistaAsync repoArtista;
         private readonly IRepoAlbumAsync repoAlbum;
+        private readonly IWebHostEnvironment _env;
 
         public AlbumController(
             ILogger<AlbumController> logger,
             IRepoArtistaAsync repoArtista,
-            IRepoAlbumAsync repoAlbum)
+            IRepoAlbumAsync repoAlbum,
+            IWebHostEnvironment env)
         {
             _logger = logger;
             this.repoArtista = repoArtista;
             this.repoAlbum = repoAlbum;
+            this._env = env;
         }
 
         // GET: mostrar formulario
@@ -40,16 +43,50 @@ namespace SpotifyMVC.Controllers
                 // Traer el artista completo por su ID
                 var artistaSeleccionado = await repoArtista.DetalleDe(model.ArtistaId);
 
-                // Crear el Album usando el objeto artista
+                var image = model.ImageUrl;
+
+                string uniqueFileName = null;
+
+                //Crear Imagen
+                if (image != null && image.Length > 0)
+                {
+                    string uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    try
+                    {
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("", "Error al guardar la imagen: " + ex.Message);
+                        return View(model);
+                    }
+                }
                 var album = new Album
                 {
                     Titulo = model.Titulo,
                     fechaLanzamiento = model.FechaLanzamiento,
                     artista = artistaSeleccionado,
-                    ImageUrl = model.ImageUrl
+                    ImageUrl = uniqueFileName
                 };
-
-                await repoAlbum.Alta(album);
+                try
+                {
+                    var idAutoIncrementado = await repoAlbum.Alta(album);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Error al crear el Artista: " + ex.Message);
+                    return View(model);
+                }
                 return RedirectToAction("Index");
             }
 
