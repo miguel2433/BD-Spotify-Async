@@ -1,0 +1,14 @@
+@using Spotify.Core
+@model List<Genero>
+@{
+    ViewData["Title"] = "Generos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @foreach(Genero genero in Model){
+        <p>@genero.genero</p>
+    }
+    <a asp-action="CrearGenero">CrearGenero</a>
+</div>

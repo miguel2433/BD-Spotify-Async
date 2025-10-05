@@ -11,37 +11,24 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IRepoArtistaAsync repoArtista;
     private readonly IRepoAlbumAsync repoAlbum;
-    public HomeController(ILogger<HomeController> logger, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
+    private readonly IRepoCancionAsync repoCancion;
+    public HomeController(ILogger<HomeController> logger,IRepoCancionAsync repoCancion, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
     {
         this.repoAlbum = repoAlbum;
         this.repoArtista = repoArtista;
+        this.repoCancion = repoCancion;
         _logger = logger;
     }
 
     public async Task<IActionResult> Index()
     {
-        var artistas = await repoArtista.Obtener();
-
-        var vm = new ArtistaViewModel
+        var vm = new HomeViewModel
         {
-            artistas = artistas,
+            artistas = await repoArtista.Obtener(),
+            albunes = await repoAlbum.Obtener(),
+            canciones = await repoCancion.Obtener()
         };
-
         return View(vm);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Index(ArtistaViewModel model)
-    {
-        var altaArtista = await repoArtista.Alta(model.artista);
-
-        model.artistas = await repoArtista.Obtener();
-
-        return View(model);
-    }
-    public IActionResult Privacy()
-    {
-        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

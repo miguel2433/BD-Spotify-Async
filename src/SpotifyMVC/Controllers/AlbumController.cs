@@ -26,12 +26,9 @@ namespace SpotifyMVC.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var vm = new AlbumViewModel
-            {
-                artistas = await repoArtista.Obtener()
-            };
+            var albums = await repoAlbum.Obtener();
 
-            return View(vm);
+            return View(albums);
         }
 
         // POST: dar de alta álbum
@@ -47,12 +44,12 @@ namespace SpotifyMVC.Controllers
                 var album = new Album
                 {
                     Titulo = model.Titulo,
-                    FechaLanzamiento = model.FechaLanzamiento,
+                    fechaLanzamiento = model.FechaLanzamiento,
                     artista = artistaSeleccionado
                 };
 
                 await repoAlbum.Alta(album);
-                return RedirectToAction();
+                return RedirectToAction("Index");
             }
 
             // Si hay error, recargar lista de artistas
@@ -64,11 +61,18 @@ namespace SpotifyMVC.Controllers
         public async Task<IActionResult> CrearAlbum()
         {
 
-            var vm = new AlbunesViewModel
+            var vm = new AlbumViewModel
             {
-                albums = await repoAlbum.Obtener()
+                artistas = await repoArtista.Obtener()
             };
             return View(vm);
+        }
+
+        public async Task<IActionResult> DetalleAlbum(uint id)
+        {
+            var album = await repoAlbum.DetalleDe(id);
+
+            return View(album);
         }
 
     }

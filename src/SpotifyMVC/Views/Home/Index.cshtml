@@ -1,36 +1,35 @@
 ﻿@using Spotify.Core
-@model ArtistaViewModel
-
+@model HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="underline">Hello world!</h1>
-    <form asp-action="Index" method="post">
-        <h1>Alta Artista</h1>
-        
+    <div class="mt-8 w-full flex justify-around items-center flex-row">
         <div>
-            <label asp-for="artista.Nombre">Nombre</label>
-            <input asp-for="artista.Nombre" placeholder="Nombre" />
+        <h1 >Artistas</h1>
+            @foreach(Artista artista in Model.artistas){
+                <p>
+                    @artista.NombreArtistico
+                </p>
+            }
         </div>
         <div>
-            <label asp-for="artista.Apellido">Apellido</label>
-            <input asp-for="artista.Apellido" placeholder="Apellido">
+            <h1>Canciones</h1>
+                @foreach(Cancion cancion in Model.canciones){
+                <p>
+                    @cancion.Titulo
+                </p>
+            }
         </div>
         <div>
-            <label asp-for="artista.NombreArtistico">NombreArtistico</label>
-            <input asp-for="artista.NombreArtistico" placeholder="Nombre artístico" />
+            <h1>Albums</h1>
+                @foreach(Album album in Model.albunes){
+                <p>
+                    @album.Titulo
+                </p>
+            }
         </div>
-
-        <button type="submit">Enviar</button>
-    </form>
-
-    <h2>Lista de Artistas</h2>
-    <ul>
-        @foreach (var artista in Model.artistas)
-        {
-            <li>@artista.Nombre (@artista.NombreArtistico)</li>
-        }
-    </ul>
+    </div>
 </div>

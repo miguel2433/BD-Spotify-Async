@@ -4,7 +4,7 @@ namespace Spotify.Core
     {
         public uint idAlbum {get;set;}
         public required string Titulo {get;set;}
-        public DateTime FechaLanzamiento {get;set;}
+        public DateTime fechaLanzamiento {get;set;}
         public required Artista artista {get;set;}
     }
 }

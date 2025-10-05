@@ -1,0 +1,35 @@
+@model List<Artista>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Spotify.Core
+
+
+@{
+    ViewData["Title"] = "Artistas";
+}
+
+
+<h1>Artistas</h1>
+
+<div>
+    @if (Model != null && Model.Any())
+    {
+        @foreach (Artista artista in Model)
+        {
+            <p>
+                <a asp-route-id="@artista.idArtista" asp-action="DetalleArtista">
+                    @artista.NombreArtistico 
+                </a>
+            </p>
+        }
+    }
+    else
+    {
+        <p>No hay Artistas registrados.</p>
+    }
+
+    <a asp-action="CrearArtista">
+        <button type="button">Crear Artista</button>
+    </a>
+</div>
+
+

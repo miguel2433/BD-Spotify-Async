@@ -1,0 +1,29 @@
+@model Spotify.Core.Artista
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+@{
+    ViewData["Title"] = "Crear Artista";
+}
+
+
+<h1>Crear Artista</h1>
+
+
+<form asp-action="CrearArtista" method="post">
+    <div>
+        <label asp-for="NombreArtistico">Nombre Artistico</label>
+        <input asp-for="NombreArtistico" placeholder="Nombre Artistico" />
+    </div>
+
+
+    <div>
+        <label asp-for="Nombre">Nombre del Artista</label>
+        <input asp-for="Nombre" placeholder="Nombre" />
+    </div>
+    <div>
+        <label asp-for="Apellido">Apellido del Artista</label>
+        <input asp-for="Apellido" placeholder="Apellido" />
+    </div>
+    <button type="submit">Guardar</button>
+</form>

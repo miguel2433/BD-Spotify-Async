@@ -8,9 +8,9 @@ namespace SpotifyMVC.Models
 {
     public class ArtistaViewModel
     {
-        public Album album { get; set; }
+        public Album ?album { get; set; }
         public List<Artista> artistas { get; set; }
 
-        public Artista artista { get; set; }
+        public Artista ?artista { get; set; }
     }
 }

@@ -12,6 +12,7 @@ public class RepoAlbumAsync : RepoGenerico, IRepoAlbumAsync
         var parametros = new DynamicParameters();
         parametros.Add("@unidAlbum", direction: ParameterDirection.Output);
         parametros.Add("@unTitulo", album.Titulo);
+        parametros.Add("@unFechaLanzamiento", album.fechaLanzamiento);
         parametros.Add("@unidArtista", album.artista.idArtista);
 
         await _conexion.ExecuteAsync("altaAlbum", parametros, commandType: CommandType.StoredProcedure);
@@ -23,9 +24,7 @@ public class RepoAlbumAsync : RepoGenerico, IRepoAlbumAsync
 public async Task<Album?> DetalleDe(uint idAlbum)
 {
     string sql = @"
-        SELECT 
-            a.idAlbum, a.Titulo, a.idArtista,
-            ar.idArtista, ar.Nombre, ar.Apellido, ar.NombreArtistico
+        SELECT *
         FROM Album a
         JOIN Artista ar ON a.idArtista = ar.idArtista
         WHERE a.idAlbum = @idAlbum";

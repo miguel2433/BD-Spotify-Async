@@ -10,6 +10,7 @@ public class RepoAlbum : RepoGenerico, IRepoAlbum
         var parametros = new DynamicParameters();
         parametros.Add("@unidAlbum", direction: ParameterDirection.Output);
         parametros.Add("@unTitulo", album.Titulo);
+        parametros.Add("@unFechaLanzamiento", album.fechaLanzamiento);
         parametros.Add("@unidArtista", album.artista.idArtista);
 
         _conexion.Execute("altaAlbum", parametros, commandType: CommandType.StoredProcedure);

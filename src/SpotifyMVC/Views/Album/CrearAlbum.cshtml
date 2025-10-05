@@ -1,14 +1,31 @@
-@using Spotify.Core
+@model SpotifyMVC.Models.AlbumViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
 
-@model AlbunesViewModel
+
 @{
-    ViewData["Title"] = "CrearAlbum";
+    ViewData["Title"] = "Crear Album";
 }
 
-<h1>@ViewData["Title"]</h1>
 
-<div>
-    @foreach(Album i in Model.albums){
-        <h1> @i.Titulo</h1>
-    }
-</div>
+<h1>Crear Álbum</h1>
+
+<form asp-action="CrearAlbum" method="post">
+    <div>
+        <label asp-for="Titulo"></label>
+        <input asp-for="Titulo" placeholder="Nombre del álbum" />
+    </div>
+
+    <div>
+        <label asp-for="FechaLanzamiento"></label>
+        <input asp-for="FechaLanzamiento" type="date" />
+    </div>
+
+    <div>
+        <label>Artista</label>
+        <select asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "Nombre"))">
+            <option value="">-- Selecciona un artista --</option>
+        </select>
+    </div>
+
+    <button type="submit">Guardar</button>
+</form>

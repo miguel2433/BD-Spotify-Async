@@ -1,0 +1,19 @@
+@model Spotify.Core.Genero
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+@{
+    ViewData["Title"] = "Crear Genero";
+}
+
+
+<h1>Crear Genero</h1>
+
+
+<form asp-action="CrearGenero" method="post">
+    <div>
+        <label asp-for="genero">Nombre del genero</label>
+        <input asp-for="genero" placeholder="ex: Rock" />
+    </div>
+    <button type="submit">Guardar</button>
+</form>
