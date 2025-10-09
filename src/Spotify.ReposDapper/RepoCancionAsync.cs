@@ -66,5 +66,30 @@ public async Task<Cancion?> DetalleDe(uint idCancion)
         return task.ToList();
         }
 
+    public async Task<List<Cancion>> ObtenerTodo()
+    {
+        string sql = @"
+            SELECT *
+            FROM Cancion c
+            JOIN Artista ar ON c.idArtista = ar.idArtista
+            JOIN Album a ON c.idAlbum = a.idAlbum
+            JOIN Genero g ON c.idGenero = g.idGenero
+            ORDER BY c.Titulo ASC;
+        ";
+
+        var resultado = await _conexion.QueryAsync<Cancion, Artista, Album, Genero, Cancion>(
+            sql,
+            (cancion, artista, album, genero) =>
+            {
+                cancion.artista = artista;
+                cancion.album = album;
+                cancion.genero = genero;
+                return cancion;
+            },
+            splitOn: "idArtista,idAlbum,idGenero"
+        );
+
+        return resultado.ToList();
+    }
 
 }

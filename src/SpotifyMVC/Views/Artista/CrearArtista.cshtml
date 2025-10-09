@@ -13,21 +13,21 @@
 <form asp-action="CrearArtista" enctype="multipart/form-data" method="post">
     <div>
         <label asp-for="artista.NombreArtistico">Nombre Artistico</label>
-        <input asp-for="artista.NombreArtistico" placeholder="Nombre Artistico" />
+        <input class="bg-zinc-900 outline-none" asp-for="artista.NombreArtistico" placeholder="Nombre Artistico" />
     </div>
 
 
     <div>
         <label asp-for="artista.Nombre">Nombre del Artista</label>
-        <input asp-for="artista.Nombre" placeholder="Nombre" />
+        <input class="bg-zinc-900 outline-none" asp-for="artista.Nombre" placeholder="Nombre" />
     </div>
     <div>
         <label asp-for="artista.Apellido">Apellido del Artista</label>
-        <input asp-for="artista.Apellido" placeholder="Apellido" />
+        <input class="bg-zinc-900 outline-none" asp-for="artista.Apellido" placeholder="Apellido" />
     </div>
     <div>
         <label asp-for="ImageUrl">Selecciona la imagen</label>
-        <input class="input-file" type="file" asp-for="ImageUrl">
+        <input class="bg-zinc-900 outline-none" class="input-file" type="file" asp-for="ImageUrl">
     </div>  
     <button type="submit">Guardar</button>
 </form>

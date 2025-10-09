@@ -53,10 +53,30 @@ public async Task<Album?> DetalleDe(uint idAlbum)
         await _conexion.ExecuteAsync(eliminarAlbum, new {idAlbum});
     }
 
-    public async Task<List<Album>> Obtener() { 
+    public async Task<List<Album>> Obtener()
+    {
         var task = await EjecutarSPConReturnDeTipoListaAsync<Album>("ObtenerAlbum");
         return task.ToList();
-        }
+    }
+    public async Task<List<Album>> ObtenerTodo()
+    {
+        string sql = @"
+            SELECT * 
+            FROM Album a
+            JOIN Artista ar ON a.idArtista = ar.idArtista";
 
+        var resultado = await _conexion.QueryAsync<Album, Artista, Album>(
+            sql,
+            (album, artista) =>
+            {
+                album.artista = artista;
+                return album;
+            },
+
+            splitOn: "idArtista"
+        );
+
+        return resultado.ToList();
+    }
 
 }

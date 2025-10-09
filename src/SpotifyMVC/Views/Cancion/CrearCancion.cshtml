@@ -13,13 +13,13 @@
 <form enctype="multipart/form-data" asp-action="CrearCancion" method="post">
     <div>
         <label asp-for="Titulo"></label>
-        <input asp-for="Titulo" placeholder="Nombre de la Canción" />
+        <input class="bg-zinc-900 outline-none" asp-for="Titulo" placeholder="Nombre de la Canción" />
         <span asp-validation-for="Titulo"></span>
     </div>
 
     <div>
         <label>Artista</label>
-        <select asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "NombreArtistico"))">
+        <select class="bg-zinc-900 outline-none" asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "NombreArtistico"))">
             <option value="">-- Selecciona un artista --</option>
         </select>
         <span asp-validation-for="ArtistaId"></span>
@@ -27,7 +27,7 @@
 
     <div>
         <label>Álbum</label>
-        <select asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
+        <select class="bg-zinc-900 outline-none" asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
             <option value="">-- Selecciona un álbum --</option>
         </select>
         <span asp-validation-for="AlbumId"></span>
@@ -35,7 +35,7 @@
 
     <div>
         <label>Género</label>
-        <select asp-for="GeneroId" asp-items="@(new SelectList(Model.generos, "idGenero", "genero"))">
+        <select class="bg-zinc-900 outline-none" asp-for="GeneroId" asp-items="@(new SelectList(Model.generos, "idGenero", "genero"))">
             <option value="">-- Selecciona un género --</option>
         </select>
         <span asp-validation-for="GeneroId"></span>
@@ -43,7 +43,7 @@
 
     <div>
         <label asp-for="ImageUrl">Selecciona la imagen</label>
-        <input type="file" asp-for="ImageUrl" />
+        <input class="bg-zinc-900 outline-none" type="file" asp-for="ImageUrl" />
         <span asp-validation-for="ImageUrl"></span>
     </div>
 

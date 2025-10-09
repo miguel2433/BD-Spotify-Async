@@ -12,11 +12,13 @@ public class ArtistaController : Controller
     private readonly ILogger<ArtistaController> _logger;
     private readonly IRepoArtistaAsync repoArtista;
     private readonly IRepoAlbumAsync repoAlbum;
+    private readonly IRepoCancionAsync repoCancion;
     private readonly IWebHostEnvironment _env;
-    public ArtistaController(ILogger<ArtistaController> logger, IWebHostEnvironment env, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
+    public ArtistaController(ILogger<ArtistaController> logger, IWebHostEnvironment env,IRepoCancionAsync repoCancion, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
     {
         this.repoAlbum = repoAlbum;
         this.repoArtista = repoArtista;
+        this.repoCancion = repoCancion;
         _logger = logger;
         _env = env;
     }
@@ -30,13 +32,25 @@ public class ArtistaController : Controller
     public async Task<IActionResult> DetalleArtista(uint id)
     {
         var artista = await repoArtista.DetalleDe(id);
-
+        
         if (artista == null)
         {
-            return NotFound(); // o podrías devolver una vista personalizada tipo "ArtistaNoEncontrado"
+            return NotFound();
         }
+        var albums = await repoAlbum.ObtenerTodo();
+        var albums_del_artista = albums.Where(album => album.artista.idArtista == artista.idArtista).ToList();
+        
+        var canciones = await repoCancion.ObtenerTodo();
+        var canciones_del_artista = canciones.Where(cancion => cancion.artista.idArtista == artista.idArtista).ToList();
 
-        return View(artista);
+        var vm = new DetalleArtistaViewModel
+        {
+            artista = artista,
+            albums = albums_del_artista,
+            canciones = canciones_del_artista
+        };
+
+        return View(vm);
     }
 
     public IActionResult CrearArtista() => View();
