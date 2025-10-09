@@ -1,0 +1,30 @@
+.carousel {
+  border: 1px dashed red;
+}
+.carousel__slide {
+  color: white;
+  border-radius: 15px;
+  transition: .2s ease-in;
+  cursor: pointer;
+}
+.carousel__slide:hover{
+    background-color: #252528;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.fondo-gradiente{
+        background: linear-gradient(
+        to bottom,
+        rgb(31, 52, 73) 0%,      /* inicio */
+        rgb(17, 25, 34) 10%,     /* azul termina en 10% */
+        #18181b 20%,  /* resto gris (zinc-900) */
+        #18181b 100%  /* hasta el final */
+    );
+}

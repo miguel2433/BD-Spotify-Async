@@ -5,50 +5,45 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SpotifyMVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+
 </head>
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SpotifyMVC</a>
-                <div class="">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Album"
-                                asp-action="Index">Albums</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cancion"
-                                asp-action="Index">Canciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Artista"
-                                asp-action="Index">Artistas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Genero"
-                            asp-action="Index">Generos</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<body class="bg-zinc-950 text-white h-screen w-full grid grid-rows-[10vh_1fr] grid-cols-[25vw_1fr]">
+    <header class="col-span-2 row-span-1 flex justify-between items-center px-8">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="text-lg font-bold">
+        SpotifyMVC
+        <i class="ml-1 fa-brands fa-spotify text-xl text-green-500"></i>
+        </a>
+        <ul class="flex gap-4">
+            <li><a asp-controller="Album" asp-action="Index" class="nav-link text-white">Albums</a></li>
+            <li><a asp-controller="Cancion" asp-action="Index" class="nav-link text-white">Canciones</a></li>
+            <li><a asp-controller="Artista" asp-action="Index" class="nav-link text-white">Artistas</a></li>
+            <li><a asp-controller="Genero" asp-action="Index" class="nav-link text-white">Géneros</a></li>
+        </ul>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <aside class="row-span-2 col-span-1 p-4 flex justify-center items-center">
+        <div class="flex justify-center items-center h-[100%] w-[100%] rounded-md bg-zinc-900">
+            <h1>Aside</h1>
+        </div>
+    </aside>
+    <div class="row-span-2 col-span-1 overflow-auto">
+        <main class="p-4">
             @RenderBody()
         </main>
+
+        <footer class="p-4 flex justify-center items-center border-t border-zinc-700">
+            <div class="text-center">
+                &copy; 2025 - SpotifyMVC - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - SpotifyMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
