@@ -7,22 +7,22 @@
 }
 
 
-<h1>Crear Álbum</h1>
+<h1 class="text-center">Crear Álbum</h1>
 
-<form enctype="multipart/form-data" asp-action="CrearAlbum" method="post">
-    <div>
+<form class="flex justify-center items-center flex-col gap-4" enctype="multipart/form-data" asp-action="CrearAlbum" method="post">
+    <div >
         <label asp-for="Titulo"></label>
-        <input asp-for="Titulo" placeholder="Nombre del álbum" />
+        <input class="bg-zinc-900 outline-none" asp-for="Titulo" placeholder="Nombre del álbum" />
     </div>
 
     <div>
         <label asp-for="FechaLanzamiento"></label>
-        <input asp-for="FechaLanzamiento" type="date" />
+        <input class="bg-zinc-900 outline-none" asp-for="FechaLanzamiento" type="date" />
     </div>
 
     <div>
         <label>Artista</label>
-        <select asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "Nombre"))">
+        <select class="bg-zinc-900 outline-none" asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "Nombre"))">
             <option value="">-- Selecciona un artista --</option>
         </select>
     </div>

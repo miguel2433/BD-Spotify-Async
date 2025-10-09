@@ -4,52 +4,97 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="pl-8 fondo-gradiente rounded-md h-[100%] w-[100%] grid grid-rows-3 grid-cols-1">
-        <div class="flex flex-col items-center">
-        <h1 class="text-2xl font-bold mb-4">Artistas</h1>
+    <div class="carousel-container pl-8 fondo-gradiente rounded-md h-[100%] w-[100%] grid grid-rows-3 grid-cols-1">
+        <div class="flex flex-col items-start">
+        <h1 class="text-2xl font-bold mt-8 mb-4 ml-2">Artistas</h1>
 
-        <div class="relative w-full">
-            <button id="prev" class="flex justify-center ml-4 items-center h-8 w-8  absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
-            &#8592;
-            </button>
+            <div class="relative w-full">
+                <button class="carousel-btn prev flex justify-center ml-4 items-center h-8 w-8  absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
+                &#8592;
+                </button>
 
-            <div id="carousel" class="no-scrollbar flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4 px-10">
-            @foreach (Artista artista in Model.artistas) {
-                <div class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
-                <img class="h-44 w-44 rounded-md bg-black object-cover" src="/images/@artista.ImageUrl" alt="@artista.Nombre">
-                <p class="mt-2 font-medium">@artista.NombreArtistico</p>
-                <p class="text-gray-500 text-sm">Artista</p>
+                <div  class="carousel no-scrollbar flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4">
+                @foreach (Artista artista in Model.artistas) {
+                    <div class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
+                    <img class="h-44 w-44 rounded-md bg-black object-cover" src="/images/@artista.ImageUrl" alt="@artista.Nombre">
+                    <p class="mt-2 font-medium">@artista.NombreArtistico</p>
+                    <p class="text-gray-500 text-sm">Artista</p>
+                    </div>
+                }
                 </div>
-            }
+
+                <button class="carousel-btn next flex justify-center mr-4 items-center h-8 w-8 absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
+                &#8594;
+                </button>
             </div>
 
-            <button id="next" class="flex justify-center mr-4 items-center h-8 w-8 absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
-            &#8594;
-            </button>
         </div>
+        <div class="flex flex-col items-start">
+        <h1 class="text-2xl font-bold mt-8 mb-4 ml-2">Canciones</h1>
+
+            <div class="relative w-full">
+                <button class="carousel-btn prev flex justify-center ml-4 items-center h-8 w-8  absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
+                &#8592;
+                </button>
+
+                <div class="carousel no-scrollbar flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4">
+                @foreach (Cancion cancion in Model.canciones) {
+                    <div class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
+                    <img class="h-44 w-44 rounded-full bg-black object-cover" src="/images/@cancion.ImageUrl" alt="@cancion.Titulo">
+                    <p class="mt-2 font-medium">@cancion.Titulo</p>
+                    <p class="text-gray-500 text-sm">Cancion</p>
+                    </div>
+                }
+                </div>
+
+                <button class="carousel-btn next flex justify-center mr-4 items-center h-8 w-8 absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
+                &#8594;
+                </button>
+            </div>
+            
         </div>
-        <div class="flex justify-center items-center flex-col">
-            <h1>Canciones</h1>
-                @foreach(Cancion cancion in Model.canciones){
-                <p>
-                    @cancion.Titulo
-                </p>
-            }
-        </div>
-        <div class="flex justify-center items-center flex-col">
-            <h1>Albums</h1>
-                @foreach(Album album in Model.albunes){
-                <p>
-                    @album.Titulo
-                </p>
-            }
+        <div class="flex flex-col items-start">
+        <h1 class="text-2xl font-bold mt-8 mb-4 ml-2">Albums</h1>
+
+            <div class="relative w-full">
+                <button class="carousel-btn prev flex justify-center ml-4 items-center h-8 w-8  absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
+                &#8592;
+                </button>
+
+                <div class="carousel no-scrollbar flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4">
+                @foreach (Album album in Model.albunes) {
+                    <div class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
+                    <img class="h-44 w-44 rounded-md bg-black object-cover" src="/images/@album.ImageUrl" alt="@album.Titulo">
+                    <p class="mt-2 font-medium">@album.Titulo</p>
+                    <p class="text-gray-500 text-sm">Album</p>
+                    </div>
+                }
+                </div>
+
+                <button class="carousel-btn next flex justify-center mr-4 items-center h-8 w-8 absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10">
+                &#8594;
+                </button>
+            </div>
+            
         </div>
     </div>
 
 @section Scripts{
     <script>
-      const carousel = document.getElementById('carousel');
-      document.getElementById('next').onclick = () => carousel.scrollBy({ left: 200, behavior: 'smooth' });
-      document.getElementById('prev').onclick = () => carousel.scrollBy({ left: -200, behavior: 'smooth' });
+        document.querySelectorAll('.carousel-container').forEach(container => {
+            const carousels = container.querySelectorAll('.carousel'); // Todos los carruseles dentro del container
+            const nextBtns = container.querySelectorAll('.carousel-btn.next');
+            const prevBtns = container.querySelectorAll('.carousel-btn.prev');
+
+            carousels.forEach((carousel, i) => {
+                nextBtns[i].addEventListener('click', () => {
+                    carousel.scrollBy({ left: 200, behavior: 'smooth' });
+                });
+                prevBtns[i].addEventListener('click', () => {
+                    carousel.scrollBy({ left: -200, behavior: 'smooth' });
+                });
+            });
+        });
+
     </script>
 }
