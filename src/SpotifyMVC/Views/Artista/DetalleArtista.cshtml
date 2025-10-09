@@ -14,11 +14,11 @@
     <div class="fondo-gradiente-detalle-artista flex flex-col justify-center items-start">
         <h1 class="ml-4 mt-8 text-2xl font-bold font-mono">Albums</h1>
         @foreach(Album album in Model.albums){
-            <div class="ml-4 mt-2 flex flex-row justify-center items-center gap-3">
-                <h1 class="text-md">@album.idAlbum</h1>
-                <img class="h-10 w-10 object-cover object-center rounded-md" src="/images/@album.ImageUrl" alt="@album.Titulo">
-                <h1 class="text-md">@album.Titulo</h1>
-            </div>
+                <a class="ml-4 mt-2 flex flex-row justify-center items-center gap-3" asp-route-id="@album.idAlbum" asp-controller="Album" asp-action="DetalleAlbum">
+                    <h1 class="text-md">@album.idAlbum</h1>
+                    <img class="h-10 w-10 object-cover rounded-md" src="/images/@album.ImageUrl" alt="@album.Titulo">
+                    <h1 class="text-md">@album.Titulo</h1>
+                </a>
         }
     </div>
     <div class="ml-4 flex flex-col justify-center items-start">

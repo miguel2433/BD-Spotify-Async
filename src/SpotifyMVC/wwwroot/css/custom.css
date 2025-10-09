@@ -1,8 +1,8 @@
 .carousel__slide {
-  color: white;
-  border-radius: 15px;
-  transition: .2s ease-in;
-  cursor: pointer;
+    color: white;
+    border-radius: 15px;
+    transition: .2s ease-in;
+    cursor: pointer;
 }
 .carousel__slide:hover{
     background-color: #252528;
@@ -11,7 +11,7 @@
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
-  .no-scrollbar {
+.no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }

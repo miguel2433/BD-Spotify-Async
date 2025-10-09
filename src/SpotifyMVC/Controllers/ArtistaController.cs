@@ -14,7 +14,7 @@ public class ArtistaController : Controller
     private readonly IRepoAlbumAsync repoAlbum;
     private readonly IRepoCancionAsync repoCancion;
     private readonly IWebHostEnvironment _env;
-    public ArtistaController(ILogger<ArtistaController> logger, IWebHostEnvironment env,IRepoCancionAsync repoCancion, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
+    public ArtistaController(ILogger<ArtistaController> logger, IWebHostEnvironment env, IRepoCancionAsync repoCancion, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
     {
         this.repoAlbum = repoAlbum;
         this.repoArtista = repoArtista;

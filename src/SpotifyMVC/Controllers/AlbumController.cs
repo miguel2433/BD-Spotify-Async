@@ -10,6 +10,7 @@ namespace SpotifyMVC.Controllers
     {
         private readonly ILogger<AlbumController> _logger;
         private readonly IRepoArtistaAsync repoArtista;
+        private readonly IRepoCancionAsync repoCancion;
         private readonly IRepoAlbumAsync repoAlbum;
         private readonly IWebHostEnvironment _env;
 
@@ -17,11 +18,13 @@ namespace SpotifyMVC.Controllers
             ILogger<AlbumController> logger,
             IRepoArtistaAsync repoArtista,
             IRepoAlbumAsync repoAlbum,
+            IRepoCancionAsync repoCancion,
             IWebHostEnvironment env)
         {
             _logger = logger;
             this.repoArtista = repoArtista;
             this.repoAlbum = repoAlbum;
+            this.repoCancion = repoCancion;
             this._env = env;
         }
 
@@ -110,7 +113,19 @@ namespace SpotifyMVC.Controllers
         {
             var album = await repoAlbum.DetalleDe(id);
 
-            return View(album);
+            var Canciones = await repoCancion.ObtenerTodo();
+            var canciones_del_album = Canciones.Where(cancion => cancion.album.idAlbum == album.idAlbum).ToList();
+
+            var ArtistaDelAlbum = await repoArtista.DetalleDe(album.artista.idArtista);
+
+            var vm = new DetalleAlbumViewModel
+            {
+                canciones = canciones_del_album,
+                artista = ArtistaDelAlbum,
+                album = album
+            };
+
+            return View(vm);
         }
 
     }
