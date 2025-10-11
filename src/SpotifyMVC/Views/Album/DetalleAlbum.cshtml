@@ -19,15 +19,15 @@
     </div>
     <table class="min-h-[50vh] fondo-gradiente-detalle-artista flex justify-start items-center flex-col">
         <thead class="border-b-2 pb-2 w-[90%]">
-            <tr class="flex justify-center items-center w-[100%]">
+            <tr class="text-zinc-400 flex justify-center items-center w-[100%]">
                 <th class="flex justify-center items-center w-[10%]">#</th>
                 <th class="flex justify-start items-start w-[70%]" >Titulo</th>
-                <th class="flex justify-center items-center w-[20%]"><i class="fa-regular fa-clock text-sm text-zinc-400"></i></th>
+                <th class="flex justify-center items-center w-[20%]"><i class="fa-regular fa-clock text-sm"></i></th>
             </tr>
         </thead>
         <tbody class="w-[90%]">
         @foreach(Cancion cancion in Model.canciones){
-            <tr class="mt-4 flex justify-center items-center w-[100%]">
+            <tr class="mt-4 py-1 flex justify-center items-center w-[100%] hover:bg-zinc-600 rounded-md cursor-pointer">
                 <td class="flex justify-center items-center w-[10%]">@cancion.idCancion</td>
                 <td class="flex justify-center items-start flex-col w-[70%]">
                     <h2 class="text-base">@cancion.Titulo</h2>
