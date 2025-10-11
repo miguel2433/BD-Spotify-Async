@@ -29,9 +29,10 @@
 .fondo-gradiente-detalle-artista{
         background: linear-gradient(
         to bottom,
-        rgb(31, 52, 73) 0%,      /* inicio */
-        rgb(17, 25, 34) 40%,     /* azul termina en 10% */
-        #18181b 40%,  /* resto gris (zinc-900) */
-        #18181b 100%  /* hasta el final */
+        rgb(31, 52, 73) 0%,
+        rgba(25, 41, 58, 0.753) 10%, 
+        rgba(23, 37, 52, 0.753) 20%, 
+        rgba(17, 25, 34, 0.202) 40%,     /* azul termina en 10% */
+        #18181b 60%  /* hasta el final */
     );
 }

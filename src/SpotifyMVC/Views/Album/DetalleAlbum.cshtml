@@ -5,22 +5,41 @@
 }
 
 <div class="bg-zinc-900 grid grid-rows-[30vh_auto_auto] grid-cols-1 pb-10">
-    <div class="relative flex justify-center flex-col items-start">
-        <img class="absolute object-cover object-center h-[100%] w-[100%]" src="/Images/@Model.album.ImageUrl" alt="@Model.album.Titulo">
-        <p class="absolute top-8 left-8 text-xl font-bold">Album</p>
-        <h1 class="absolute left-8 text-5xl tracking-normal font-bold">@Model.album.Titulo</h1>
-    </div>
-    <div class="min-h-[50vh] fondo-gradiente-detalle-artista flex justify-start items-start flex-col">
-        <h1 class="ml-4 mt-8 ">Canciones</h1>
-        <div class="flex justify-center items-center flex-col">
-        @foreach(Cancion cancion in Model.canciones){
-            <div class="ml-4 mt-2 gap-3 flex flex-row justify-center items-center">
-                <img class="h-10 w-10 rounded-full" src="/Images/@cancion.ImageUrl" alt="@cancion.Titulo">
-                <h1>@cancion.Titulo</h1>
+    <div class="bg-[rgb(35,52,73)] flex justify-start flex-row items-center">
+        <img class=" ml-4 object-cover object-center h-48 rounded-lg w-48" src="/Images/@Model.album.ImageUrl" alt="@Model.album.Titulo">
+        <div class="ml-4 mb-3 flex self-end flex-col items-start ">
+            <p class="text-xl font-bold">Album</p>
+            <h1 class="left-8 text-5xl tracking-normal font-bold">@Model.album.Titulo</h1>
+            <div class="flex gap-2 flex-row justify-center items-center ">
+                <img class="object-cover object-center h-6 w-6 rounded-full" src="/Images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
+                <p class="text-lg font-bold" >@Model.artista.NombreArtistico</p>
+                <p class="text-zinc-400">Canciones: @Model.canciones.Count()</p>
             </div>
-        }
         </div>
     </div>
+    <table class="min-h-[50vh] fondo-gradiente-detalle-artista flex justify-start items-center flex-col">
+        <thead class="border-b-2 pb-2 w-[90%]">
+            <tr class="flex justify-center items-center w-[100%]">
+                <th class="flex justify-center items-center w-[10%]">#</th>
+                <th class="flex justify-start items-start w-[70%]" >Titulo</th>
+                <th class="flex justify-center items-center w-[20%]"><i class="fa-regular fa-clock text-sm text-zinc-400"></i></th>
+            </tr>
+        </thead>
+        <tbody class="w-[90%]">
+        @foreach(Cancion cancion in Model.canciones){
+            <tr class="mt-4 flex justify-center items-center w-[100%]">
+                <td class="flex justify-center items-center w-[10%]">@cancion.idCancion</td>
+                <td class="flex justify-center items-start flex-col w-[70%]">
+                    <h2 class="text-base">@cancion.Titulo</h2>
+                    <h3 class="text-zinc-400 text-sm" >@cancion.artista.NombreArtistico</h3>
+                </td>
+                <td class="flex justify-center items-center w-[20%]">
+                    @cancion.duration.ToString(@"mm\:ss")
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
     <div class="flex justify-start items-center flex-row h-[100%] w-[100%]">
         <img class="ml-4 h-44 w-44 object-cover object-center rounded-full" src="/Images/@Model.artista.ImageUrl" alt="">
         <div class="ml-8 flex flex-col justify-between items-baseline">
