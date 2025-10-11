@@ -2,32 +2,52 @@
 @model DetalleArtistaViewModel
 @{
     ViewData["Title"] = "DetalleArtista";
+    var contador = 1;
 }
 
 
 <div class="grid h-[100%] bg-zinc-900 w-[100%] grid-cols-1 grid-rows-[40vh_1fr_1fr] rounded-md">
     <div class="relative text-start flex justify-center items-start flex-col">
-        <img class="absolute w-[100%] h-[100%]" src="/images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
-        <p class="ml-4 relative font-bold">Artista</p>
-        <h1 class="ml-4 relative text-6xl font-bold">@Model.artista.NombreArtistico</h1>
+        <img class="absolute w-[100%] h-[100%] object-cover object-fit" src="/images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
+        <p class="ml-4 relative text-xl font-bold">Artista</p>
+        <h1 class="ml-2 relative text-8xl font-bold">@Model.artista.NombreArtistico</h1>
     </div>
     <div class="fondo-gradiente-detalle-artista flex flex-col justify-center items-start">
         <h1 class="ml-4 mt-8 text-2xl font-bold font-mono">Albums</h1>
-        @foreach(Album album in Model.albums){
-                <a class="ml-4 mt-2 flex flex-row justify-center items-center gap-3" asp-route-id="@album.idAlbum" asp-controller="Album" asp-action="DetalleAlbum">
-                    <h1 class="text-md">@album.idAlbum</h1>
-                    <img class="h-10 w-10 object-cover rounded-md" src="/images/@album.ImageUrl" alt="@album.Titulo">
-                    <h1 class="text-md">@album.Titulo</h1>
-                </a>
-        }
+    @foreach (Album album in Model.albums)
+    {
+        <a class="group w-[90%] hover:bg-zinc-600 rounded-md p-2 ml-4 mt-2 flex flex-row justify-between items-center gap-3"
+        asp-route-id="@album.idAlbum" asp-controller="Album" asp-action="DetalleAlbum">
+        
+            <div class="flex flex-row justify-center items-center gap-3">
+                <h1 class="relative text-md w-6 text-center flex justify-center items-center">
+                    <p class="absolute group-hover:hidden">@contador</p>
+
+                    <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
+                </h1>
+
+                <img class="h-10 w-10 object-cover rounded-md" src="/images/@album.ImageUrl" alt="@album.Titulo">
+                <h1 class="text-md">@album.Titulo</h1>
+            </div>
+
+            <div>
+                <h1>@album.fechaLanzamiento.ToString("yyyy")</h1>
+            </div>
+        </a>
+
+        contador++;
+    }
     </div>
     <div class="ml-4 flex flex-col justify-center items-start">
-        <h1 class="text-2xl font-bold font-mono">Canciones</h1>
-            <div class="flex flex-row justify-center items-center">
+        <h1 class="text-2xl font-bold font-mono">Canciones Populares</h1>
+            <div class="flex flex-row justify-center gap-5   items-center">
                 @foreach(Cancion cancion in Model.canciones){
                     <div class="flex flex-col justify-center items-center">
-                        <img class="h-44 w-44 rounded-sm" src="/images/@cancion.ImageUrl" alt="@cancion.Titulo">
-                        <h1 class="text-md text-start">@cancion.Titulo</h1>
+                        <img class="h-44 w-44 rounded-md" src="/images/@cancion.ImageUrl" alt="@cancion.Titulo">
+                        <div class="flex justify-start items-center flex-col ">
+                            <h1 class="text-lg text-start">@cancion.Titulo</h1>
+                            <p class="text-sm text-zinc-500">@cancion.album.fechaLanzamiento.ToString("yyyy")</p>
+                        </div>
                     </div>
                 }
             </div>
