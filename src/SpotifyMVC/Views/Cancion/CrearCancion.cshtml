@@ -18,14 +18,6 @@
     </div>
 
     <div>
-        <label>Artista</label>
-        <select class="bg-zinc-900 outline-none" asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "NombreArtistico"))">
-            <option value="">-- Selecciona un artista --</option>
-        </select>
-        <span asp-validation-for="ArtistaId"></span>
-    </div>
-
-    <div>
         <label>Álbum</label>
         <select class="bg-zinc-900 outline-none" asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
             <option value="">-- Selecciona un álbum --</option>

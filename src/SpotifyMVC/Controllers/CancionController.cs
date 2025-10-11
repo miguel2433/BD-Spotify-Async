@@ -67,7 +67,6 @@ namespace SpotifyMVC.Controllers
             try
             {
                 // Traer entidades completas
-                var artistaSeleccionado = await repoArtista.DetalleDe(model.ArtistaId);
                 var albumSeleccionado = await repoAlbum.DetalleDe(model.AlbumId);
                 var generoSeleccionado = await repoGenero.DetalleDe(model.GeneroId);
 
@@ -93,7 +92,7 @@ namespace SpotifyMVC.Controllers
                 {
                     Titulo = model.Titulo,
                     duration = new TimeSpan(0, 3, 0), // default 3 min
-                    artista = artistaSeleccionado,
+                    artista = albumSeleccionado.artista,
                     album = albumSeleccionado,
                     genero = generoSeleccionado,
                     ImageUrl = uniqueFileName

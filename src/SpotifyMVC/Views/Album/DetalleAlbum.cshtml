@@ -2,13 +2,14 @@
 @model DetalleAlbumViewModel
 @{
     ViewData["Title"] = "DetalleAlbum";
+    int contador = 1;
 }
 
-<div class="bg-zinc-900 grid grid-rows-[30vh_auto_auto] grid-cols-1 pb-10">
-    <div class="bg-[rgb(35,52,73)] flex justify-start flex-row items-center">
+<div class="bg-zinc-900 rounded-md grid grid-rows-[30vh_auto_auto] grid-cols-1 pb-10">
+    <div class="bg-[rgb(35,52,73)] flex justify-start flex-row items-center rounded-t-md">
         <img class=" ml-4 object-cover object-center h-48 rounded-lg w-48" src="/Images/@Model.album.ImageUrl" alt="@Model.album.Titulo">
         <div class="ml-4 mb-3 flex self-end flex-col items-start ">
-            <p class="text-xl font-bold">Album</p>
+            <p class="text-base font-medium">Album</p>
             <h1 class="left-8 text-5xl tracking-normal font-bold">@Model.album.Titulo</h1>
             <div class="flex gap-2 flex-row justify-center items-center ">
                 <img class="object-cover object-center h-6 w-6 rounded-full" src="/Images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
@@ -28,7 +29,7 @@
         <tbody class="w-[90%]">
         @foreach(Cancion cancion in Model.canciones){
             <tr class="mt-4 py-1 flex justify-center items-center w-[100%] hover:bg-zinc-600 rounded-md cursor-pointer">
-                <td class="flex justify-center items-center w-[10%]">@cancion.idCancion</td>
+                <td class="flex justify-center items-center w-[10%]">@contador</td>
                 <td class="flex justify-center items-start flex-col w-[70%]">
                     <h2 class="text-base">@cancion.Titulo</h2>
                     <h3 class="text-zinc-400 text-sm" >@cancion.artista.NombreArtistico</h3>
@@ -37,7 +38,8 @@
                     @cancion.duration.ToString(@"mm\:ss")
                 </td>
             </tr>
-        }
+                contador++;
+            }
         </tbody>
     </table>
     <div class="flex justify-start items-center flex-row h-[100%] w-[100%]">
