@@ -7,19 +7,19 @@
 
 <div class="bg-zinc-900 rounded-md grid grid-rows-[30vh_auto_auto] grid-cols-1 pb-10">
     <div class="bg-[rgb(35,52,73)] flex justify-start flex-row items-center rounded-t-md">
-        <img class=" ml-4 object-cover object-center h-48 rounded-lg w-48" src="/Images/@Model.album.ImageUrl" alt="@Model.album.Titulo">
+        <img class="hover:scale-105 duration-100 cursor-pointer ml-4 object-cover object-center h-44 rounded-lg w-44" src="/Images/@Model.album.ImageUrl" alt="@Model.album.Titulo">
         <div class="ml-4 mb-3 flex self-end flex-col items-start ">
             <p class="text-base font-medium">Album</p>
             <h1 class="left-8 text-5xl tracking-normal font-bold">@Model.album.Titulo</h1>
             <div class="flex gap-2 flex-row justify-center items-center ">
                 <img class="object-cover object-center h-6 w-6 rounded-full" src="/Images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
-                <p class="text-lg font-bold" >@Model.artista.NombreArtistico</p>
+                <a asp-route-id="@Model.artista.idArtista" asp-controller="Artista" asp-action="DetalleArtista" class="text-lg font-bold hover:underline" >@Model.artista.NombreArtistico</a>
                 <p class="text-zinc-400">Canciones: @Model.canciones.Count()</p>
             </div>
         </div>
     </div>
     <table class="min-h-[50vh] fondo-gradiente-detalle-artista flex justify-start items-center flex-col">
-        <thead class="border-b-2 pb-2 w-[90%]">
+        <thead class="border-b-2 mb-4 pb-2 w-[90%]">
             <tr class="text-zinc-400 flex justify-center items-center w-[100%]">
                 <th class="flex justify-center items-center w-[10%]">#</th>
                 <th class="flex justify-start items-start w-[70%]" >Titulo</th>
@@ -28,11 +28,15 @@
         </thead>
         <tbody class="w-[90%]">
         @foreach(Cancion cancion in Model.canciones){
-            <tr class="mt-4 py-1 flex justify-center items-center w-[100%] hover:bg-zinc-600 rounded-md cursor-pointer">
-                <td class="flex justify-center items-center w-[10%]">@contador</td>
+            <tr class="group py-1 flex justify-center items-center w-[100%] hover:bg-zinc-600 rounded-md cursor-pointer">
+                <td class="flex relative justify-center items-center w-[10%]">
+                    <p class="absolute group-hover:hidden">@contador</p>
+
+                    <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
+                </td>
                 <td class="flex justify-center items-start flex-col w-[70%]">
-                    <h2 class="text-base">@cancion.Titulo</h2>
-                    <h3 class="text-zinc-400 text-sm" >@cancion.artista.NombreArtistico</h3>
+                    <h2 class="text-base hover:underline">@cancion.Titulo</h2>
+                    <h3 class="text-zinc-400 text-sm hover:underline group-hover:text-zinc-50" >@cancion.artista.NombreArtistico</h3>
                 </td>
                 <td class="flex justify-center items-center w-[20%]">
                     @cancion.duration.ToString(@"mm\:ss")

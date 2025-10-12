@@ -6,37 +6,37 @@
 }
 
 
-<div class="grid h-[100%] bg-zinc-900 w-[100%] grid-cols-1 grid-rows-[40vh_1fr_1fr] rounded-md">
-    <div class="relative text-start flex justify-center items-start flex-col">
-        <img class="absolute w-[100%] h-[100%] object-cover object-fit" src="/images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
+<div class="grid h-[100%] bg-zinc-900 w-[100%] grid-cols-1 grid-rows-[40vh_1fr_1fr] rounded-t-md">
+    <div class="relative text-start flex justify-center rounded-md items-start flex-col">
+        <img class="absolute w-[100%] h-[100%] object-cover object-fit rounded-t-md" src="/images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
         <p class="ml-4 relative text-xl font-bold">Artista</p>
         <h1 class="ml-2 relative text-8xl font-bold">@Model.artista.NombreArtistico</h1>
     </div>
     <div class="fondo-gradiente-detalle-artista flex flex-col justify-center items-start">
         <h1 class="ml-4 mt-8 text-2xl font-bold font-mono">Albums</h1>
-    @foreach (Album album in Model.albums)
-    {
-        <a class="group w-[90%] hover:bg-zinc-600 rounded-md p-2 ml-4 mt-2 flex flex-row justify-between items-center gap-3"
-        asp-route-id="@album.idAlbum" asp-controller="Album" asp-action="DetalleAlbum">
-        
-            <div class="flex flex-row justify-center items-center gap-3">
-                <h1 class="relative text-md w-6 text-center flex justify-center items-center">
-                    <p class="absolute group-hover:hidden">@contador</p>
+        @foreach (Album album in Model.albums)
+        {
+            <a class="group w-[90%] hover:bg-zinc-600 rounded-md p-2 ml-4 mt-2 flex flex-row justify-between items-center gap-3"
+            asp-route-id="@album.idAlbum" asp-controller="Album" asp-action="DetalleAlbum">
+            
+                <div class="flex flex-row justify-center items-center gap-3">
+                    <h1 class="relative text-md w-6 text-center flex justify-center items-center">
+                        <p class="absolute group-hover:hidden">@contador</p>
 
-                    <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
-                </h1>
+                        <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
+                    </h1>
 
-                <img class="h-10 w-10 object-cover rounded-md" src="/images/@album.ImageUrl" alt="@album.Titulo">
-                <h1 class="text-md">@album.Titulo</h1>
-            </div>
+                    <img class="h-10 w-10 object-cover rounded-md" src="/images/@album.ImageUrl" alt="@album.Titulo">
+                    <h1 class="text-md">@album.Titulo</h1>
+                </div>
 
-            <div>
-                <h1>@album.fechaLanzamiento.ToString("yyyy")</h1>
-            </div>
-        </a>
+                <div>
+                    <h1>@album.fechaLanzamiento.ToString("yyyy")</h1>
+                </div>
+            </a>
 
-        contador++;
-    }
+            contador++;
+        }
     </div>
     <div class="ml-4 flex flex-col justify-center items-start">
         <h1 class="text-2xl font-bold font-mono">Canciones Populares</h1>
