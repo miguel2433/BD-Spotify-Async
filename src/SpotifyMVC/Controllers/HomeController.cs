@@ -26,7 +26,7 @@ public class HomeController : Controller
         {
             artistas = await repoArtista.Obtener(),
             albunes = await repoAlbum.Obtener(),
-            canciones = await repoCancion.Obtener()
+            canciones = await repoCancion.ObtenerTodo()
         };
         return View(vm);
     }
