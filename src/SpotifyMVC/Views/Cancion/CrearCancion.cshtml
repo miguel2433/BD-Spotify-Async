@@ -7,38 +7,59 @@
 }
 
 
-<h1>Crear Cancion</h1>
 
-
-<form enctype="multipart/form-data" asp-action="CrearCancion" method="post">
-    <div>
-        <label asp-for="Titulo"></label>
-        <input class="bg-zinc-900 outline-none" asp-for="Titulo" placeholder="Nombre de la Canción" />
+<div class="min-h-screen w-full flex justify-center items-center bg-zinc-950 text-white">
+<form class="flex flex-col gap-6 w-full max-w-md p-8 rounded-2xl border border-zinc-700 shadow-lg bg-zinc-900" enctype="multipart/form-data" asp-action="CrearCancion" method="post">
+    <h1 class="text-3xl font-semibold text-green-500 text-center mb-2">Crear Cancion</h1>
+    
+    <div class="flex flex-col w-full">
+        <label class="mb-1 text-sm text-zinc-400" asp-for="Titulo">Nombre de la cancion</label>
+        <input  class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="Titulo" placeholder="Nombre de la Cancion" />
         <span asp-validation-for="Titulo"></span>
     </div>
 
-    <div>
-        <label>Álbum</label>
-        <select class="bg-zinc-900 outline-none" asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
+    <div class="flex flex-col w-full">
+        <label class="mb-1 text-sm text-zinc-400">Álbum</label>
+        <select class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
             <option value="">-- Selecciona un álbum --</option>
         </select>
         <span asp-validation-for="AlbumId"></span>
     </div>
 
-    <div>
-        <label>Género</label>
-        <select class="bg-zinc-900 outline-none" asp-for="GeneroId" asp-items="@(new SelectList(Model.generos, "idGenero", "genero"))">
+    <div class="flex flex-col w-full">
+        <label class="mb-1 text-sm text-zinc-400">Género</label>
+        <select class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="GeneroId" asp-items="@(new SelectList(Model.generos, "idGenero", "genero"))">
             <option value="">-- Selecciona un género --</option>
         </select>
         <span asp-validation-for="GeneroId"></span>
     </div>
 
-    <div>
-        <label asp-for="ImageUrl">Selecciona la imagen</label>
-        <input class="bg-zinc-900 outline-none" type="file" asp-for="ImageUrl" />
-        <span asp-validation-for="ImageUrl"></span>
-    </div>
+        <div class="flex flex-col w-full">
+            <label asp-for="ImageUrl" class="mb-1 text-sm text-zinc-400">Selecciona la imagen</label>
 
-    <button type="submit">Guardar</button>
-</form>
+            <label for="file-upload"
+                class="cursor-pointer bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-center transition-colors">
+                Elegir archivo
+            </label>
+            <input id="file-upload" type="file" asp-for="ImageUrl" required class="hidden"
+                onchange="updateFileName(this)" />
 
+            <span id="file-name" class="text-xs text-zinc-500 mt-1 italic"></span>
+        </div>
+
+        <!-- Botón enviar -->
+        <button type="submit"
+            class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-md transition-all">
+            Guardar
+        </button>
+    </form>
+</div>
+
+<script>
+    function updateFileName(input) {
+        const fileNameSpan = document.getElementById('file-name');
+        fileNameSpan.textContent = input.files.length > 0
+            ? input.files[0].name
+            : '';
+    }
+</script>
