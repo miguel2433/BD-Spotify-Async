@@ -1,36 +1,66 @@
 @model SpotifyMVC.Models.AlbumViewModel
 @using Microsoft.AspNetCore.Mvc.Rendering
 
-
 @{
-    ViewData["Title"] = "Crear Album";
+    ViewData["Title"] = "Crear Álbum";
 }
 
+<div class="min-h-screen w-full flex justify-center items-center bg-zinc-950 text-white">
+    <form class="flex flex-col gap-6 w-full max-w-md p-8 rounded-2xl border border-zinc-700 shadow-lg bg-zinc-900"
+        enctype="multipart/form-data" asp-action="CrearAlbum" method="post">
 
-<h1 class="text-center">Crear Álbum</h1>
+        <h1 class="text-3xl font-semibold text-green-500 text-center mb-2">Crear Álbum</h1>
 
-<form class="flex justify-center items-center flex-col gap-4" enctype="multipart/form-data" asp-action="CrearAlbum" method="post">
-    <div >
-        <label asp-for="Titulo"></label>
-        <input class="bg-zinc-900 outline-none" asp-for="Titulo" placeholder="Nombre del álbum" />
-    </div>
+        <!-- Título -->
+        <div class="flex flex-col w-full">
+            <label asp-for="Titulo" class="mb-1 text-sm text-zinc-400">Título del álbum</label>
+            <input asp-for="Titulo" placeholder="Nombre del álbum"
+                class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" />
+        </div>
 
-    <div>
-        <label asp-for="FechaLanzamiento"></label>
-        <input class="bg-zinc-900 outline-none" asp-for="FechaLanzamiento" type="date" />
-    </div>
+        <!-- Fecha -->
+        <div class="flex flex-col w-full">
+            <label asp-for="FechaLanzamiento" class="mb-1 text-sm text-zinc-400">Fecha de lanzamiento</label>
+            <input asp-for="FechaLanzamiento" type="date"
+                class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" />
+        </div>
 
-    <div>
-        <label>Artista</label>
-        <select class="bg-zinc-900 outline-none" asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "Nombre"))">
-            <option value="">-- Selecciona un artista --</option>
-        </select>
-    </div>
-    <div>
-        <label asp-for="ImageUrl">Selecciona la imagen</label>
-        <input class="input-file" type="file" asp-for="ImageUrl">
-    </div>
+        <!-- Artista -->
+        <div class="flex flex-col w-full">
+            <label class="mb-1 text-sm text-zinc-400">Artista</label>
+            <select asp-for="ArtistaId" asp-items="@(new SelectList(Model.artistas, "idArtista", "Nombre"))"
+                class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all">
+                <option value="">-- Selecciona un artista --</option>
+            </select>
+        </div>
 
+        <!-- Imagen -->
+        <div class="flex flex-col w-full">
+            <label asp-for="ImageUrl" class="mb-1 text-sm text-zinc-400">Selecciona la imagen</label>
 
-    <button type="submit">Guardar</button>
-</form>
+            <label for="file-upload"
+                class="cursor-pointer bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-center transition-colors">
+                Elegir archivo
+            </label>
+            <input id="file-upload" type="file" asp-for="ImageUrl" required class="hidden"
+                onchange="updateFileName(this)" />
+
+            <span id="file-name" class="text-xs text-zinc-500 mt-1 italic"></span>
+        </div>
+
+        <!-- Botón enviar -->
+        <button type="submit"
+            class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-md transition-all">
+            Guardar
+        </button>
+    </form>
+</div>
+
+<script>
+    function updateFileName(input) {
+        const fileNameSpan = document.getElementById('file-name');
+        fileNameSpan.textContent = input.files.length > 0
+            ? input.files[0].name
+            : '';
+    }
+</script>
