@@ -7,13 +7,15 @@
 }
 
 
-<h1>Crear Genero</h1>
 
 
-<form asp-action="CrearGenero" method="post">
-    <div>
-        <label asp-for="genero">Nombre del genero</label>
-        <input class="bg-zinc-900 outline-none" asp-for="genero" placeholder="ex: Rock" />
+<div class="min-h-screen w-full flex justify-center items-center bg-zinc-900 rounded-md text-white">
+<form class="flex flex-col gap-6 w-full max-w-md p-8 rounded-2xl border border-zinc-700 shadow-lg bg-zinc-950" asp-action="CrearGenero" method="post">
+    <h1 class="text-3xl font-semibold text-green-500 text-center mb-2">Crear Genero</h1>
+    <div class="flex flex-col w-full">
+        <label class="mb-1 text-sm text-zinc-400" asp-for="genero">Nombre del genero</label>
+        <input class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="genero" placeholder="ex: Rock" />
     </div>
-    <button type="submit">Guardar</button>
+    <button  class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-md transition-all" type="submit">Guardar</button>
 </form>
+</div>
