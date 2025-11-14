@@ -33,12 +33,16 @@
             @foreach (Cancion cancion in Model.canciones)
             {
                 <tr id="row-@contador"
-                    class="group py-1 flex justify-center items-center w-[100%] hover:bg-zinc-600 rounded-md cursor-pointer"
+                    class="group song-row py-1 flex justify-center items-center w-[100%] hover:bg-zinc-700/40 rounded-md cursor-pointer transition-colors"
                     data-audio="/Audios/@cancion.AudioUrl" onclick="playSong(this)">
-                    <td class="flex relative justify-center items-center w-[10%]">
-                        <p class="absolute group-hover:hidden">@contador</p>
 
-                        <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
+                    <td class="flex relative justify-center items-center w-[10%]">
+                        <p class="absolute track-number group-hover:opacity-0 transition-opacity">@contador</p>
+
+
+                        <i class="fa-solid fa-play play-icon text-zinc-400/40 text-base relative opacity-0 group-hover:opacity-100 transition-opacity"></i>
+
+
                     </td>
                     <td class="flex justify-center items-start flex-col w-[70%]">
                         <h2 class="text-base hover:underline">@cancion.Titulo</h2>
@@ -134,11 +138,22 @@
     function updateRowUI(row, isPlaying) {
         resetAllRowsUI();
 
+        const playIcon = row.querySelector(".play-icon");
+
         if (isPlaying) {
+            // Fondo verde
             row.classList.add("playing-row");
+
+            // Puntos
             row.querySelector(".playing-dots").classList.remove("hidden");
+
+            // Ícono verde
+            playIcon.classList.add("playing");
         } else {
             row.querySelector(".playing-dots").classList.add("hidden");
+
+            // Ícono vuelve a gris
+            playIcon.classList.remove("playing");
         }
 
         currentAudio.currentRow = row;
@@ -148,9 +163,12 @@
     function resetAllRowsUI() {
         document.querySelectorAll("tbody tr").forEach(r => {
             r.classList.remove("playing-row");
+
             const dots = r.querySelector(".playing-dots");
             if (dots) dots.classList.add("hidden");
+
+            const icon = r.querySelector(".play-icon");
+            if (icon) icon.classList.remove("playing");
         });
     }
 </script>
-

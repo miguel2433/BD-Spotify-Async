@@ -3,10 +3,31 @@
 @tailwind utilities;
 
 @layer utilities {
-
+    .playing-row {
+        @apply bg-green-600/30;
+    }
+    .playing-row .track-number {
+        @apply opacity-0;
+    }
+    .song-row.playing-row:hover {
+        background-color: rgb(22 163 74 / 0.3);
+        /* mismo verde */
+    }
+    .play-icon.playing {
+        @apply opacity-100 text-green-400;
+    }
     @keyframes bounce-dot {
-        0%, 100% { transform: translateY(0); opacity: 0.4; }
-        50% { transform: translateY(-6px); opacity: 1; }
+
+        0%,
+        100% {
+            transform: translateY(0);
+            opacity: 0.4;
+        }
+
+        50% {
+            transform: translateY(-6px);
+            opacity: 1;
+        }
     }
 
     .dot-1 {
