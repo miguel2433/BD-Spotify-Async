@@ -9,5 +9,6 @@ namespace Spotify.Core
         public required Genero genero { get; set; }
         public required Artista artista { get; set; }
         public string? ImageUrl { get; set; }
+        public string? AudioUrl { get; set; }
     }
 }

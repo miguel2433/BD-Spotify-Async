@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `5to_Spotify`.`Cancion` (
   `idArtista` INT UNSIGNED NOT NULL,
   `idGenero` TINYINT UNSIGNED NOT NULL,
   `ImageUrl` VARCHAR(255) NULL,
+  `AudioUrl` VARCHAR(255) NULL,
   PRIMARY KEY (`idCancion`),
   INDEX `album_id` (`idAlbum` ASC) VISIBLE,
   INDEX `artist_id` (`idArtista` ASC) VISIBLE,

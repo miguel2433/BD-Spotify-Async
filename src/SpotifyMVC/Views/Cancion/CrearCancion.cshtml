@@ -9,30 +9,38 @@
 
 
 <div class="min-h-screen w-full flex justify-center rounded-md items-center bg-zinc-900 text-white">
-<form class="flex flex-col gap-6 w-full max-w-md p-8 rounded-2xl border border-zinc-700 shadow-lg bg-zinc-950" enctype="multipart/form-data" asp-action="CrearCancion" method="post">
-    <h1 class="text-3xl font-semibold text-green-500 text-center mb-2">Crear Cancion</h1>
-    
-    <div class="flex flex-col w-full">
-        <label class="mb-1 text-sm text-zinc-400" asp-for="Titulo">Nombre de la cancion</label>
-        <input  class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="Titulo" placeholder="Nombre de la Cancion" />
-        <span asp-validation-for="Titulo"></span>
-    </div>
+    <form class="flex flex-col gap-6 w-full max-w-md p-8 rounded-2xl border border-zinc-700 shadow-lg bg-zinc-950"
+        enctype="multipart/form-data" asp-action="CrearCancion" method="post">
 
-    <div class="flex flex-col w-full">
-        <label class="mb-1 text-sm text-zinc-400">Álbum</label>
-        <select class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
-            <option value="">-- Selecciona un álbum --</option>
-        </select>
-        <span asp-validation-for="AlbumId"></span>
-    </div>
+        <h1 class="text-3xl font-semibold text-green-500 text-center mb-2">Crear Cancion</h1>
 
-    <div class="flex flex-col w-full">
-        <label class="mb-1 text-sm text-zinc-400">Género</label>
-        <select class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="GeneroId" asp-items="@(new SelectList(Model.generos, "idGenero", "genero"))">
-            <option value="">-- Selecciona un género --</option>
-        </select>
-        <span asp-validation-for="GeneroId"></span>
-    </div>
+        <div class="flex flex-col w-full">
+            <label class="mb-1 text-sm text-zinc-400" asp-for="Titulo">Nombre de la cancion</label>
+            <input
+                class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                asp-for="Titulo" placeholder="Nombre de la Cancion" />
+            <span asp-validation-for="Titulo"></span>
+        </div>
+
+        <div class="flex flex-col w-full">
+            <label class="mb-1 text-sm text-zinc-400">Álbum</label>
+            <select
+                class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                asp-for="AlbumId" asp-items="@(new SelectList(Model.albums, "idAlbum", "Titulo"))">
+                <option value="">-- Selecciona un álbum --</option>
+            </select>
+            <span asp-validation-for="AlbumId"></span>
+        </div>
+
+        <div class="flex flex-col w-full">
+            <label class="mb-1 text-sm text-zinc-400">Género</label>
+            <select
+                class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                asp-for="GeneroId" asp-items="@(new SelectList(Model.generos, "idGenero", "genero"))">
+                <option value="">-- Selecciona un género --</option>
+            </select>
+            <span asp-validation-for="GeneroId"></span>
+        </div>
 
         <div class="flex flex-col w-full">
             <label asp-for="ImageUrl" class="mb-1 text-sm text-zinc-400">Selecciona la imagen</label>
@@ -45,6 +53,19 @@
                 onchange="updateFileName(this)" />
 
             <span id="file-name" class="text-xs text-zinc-500 mt-1 italic"></span>
+        </div>
+        <div class="flex flex-col w-full">
+            <label asp-for="AudioUrl" class="mb-1 text-sm text-zinc-400">Selecciona el audio</label>
+
+            <label for="audio-upload"
+                class="cursor-pointer bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-center transition-colors">
+                Elegir archivo
+            </label>
+
+            <input id="audio-upload" type="file" asp-for="AudioUrl" accept="audio/*,video/mp4" class="hidden"
+                onchange="updateAudioName(this)" />
+
+            <span id="audio-name" class="text-xs text-zinc-500 mt-1 italic"></span>
         </div>
 
         <!-- Botón enviar -->
@@ -61,5 +82,9 @@
         fileNameSpan.textContent = input.files.length > 0
             ? input.files[0].name
             : '';
+    }
+    function updateAudioName(input) {
+        const span = document.getElementById('audio-name');
+        span.textContent = input.files.length > 0 ? input.files[0].name : '';
     }
 </script>

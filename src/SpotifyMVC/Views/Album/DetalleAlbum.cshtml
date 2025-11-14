@@ -7,13 +7,16 @@
 
 <div class="bg-zinc-900 rounded-md grid grid-rows-[30vh_auto_auto] grid-cols-1 pb-10">
     <div class="bg-[rgb(35,52,73)] flex justify-start flex-row items-center rounded-t-md">
-        <img class="hover:scale-105 duration-100 cursor-pointer ml-4 object-cover object-center h-44 rounded-lg w-44" src="/Images/@Model.album.ImageUrl" alt="@Model.album.Titulo">
+        <img class="hover:scale-105 duration-100 cursor-pointer ml-4 object-cover object-center h-44 rounded-lg w-44"
+            src="/Images/@Model.album.ImageUrl" alt="@Model.album.Titulo">
         <div class="ml-4 mb-3 flex self-end flex-col items-start ">
             <p class="text-base font-medium">Album</p>
             <h1 class="left-8 text-5xl tracking-normal font-bold">@Model.album.Titulo</h1>
             <div class="flex gap-2 flex-row justify-center items-center ">
-                <img class="object-cover object-center h-6 w-6 rounded-full" src="/Images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
-                <a asp-route-id="@Model.artista.idArtista" asp-controller="Artista" asp-action="DetalleArtista" class="text-lg font-bold hover:underline" >@Model.artista.NombreArtistico</a>
+                <img class="object-cover object-center h-6 w-6 rounded-full" src="/Images/@Model.artista.ImageUrl"
+                    alt="@Model.artista.NombreArtistico">
+                <a asp-route-id="@Model.artista.idArtista" asp-controller="Artista" asp-action="DetalleArtista"
+                    class="text-lg font-bold hover:underline">@Model.artista.NombreArtistico</a>
                 <p class="text-zinc-400">Canciones: @Model.canciones.Count()</p>
             </div>
         </div>
@@ -22,36 +25,132 @@
         <thead class="border-b-2 mb-4 pb-2 w-[90%]">
             <tr class="text-zinc-400 flex justify-center items-center w-[100%]">
                 <th class="flex justify-center items-center w-[10%]">#</th>
-                <th class="flex justify-start items-start w-[70%]" >Titulo</th>
+                <th class="flex justify-start items-start w-[70%]">Titulo</th>
                 <th class="flex justify-center items-center w-[20%]"><i class="fa-regular fa-clock text-sm"></i></th>
             </tr>
         </thead>
         <tbody class="w-[90%]">
-        @foreach(Cancion cancion in Model.canciones){
-            <tr class="group py-1 flex justify-center items-center w-[100%] hover:bg-zinc-600 rounded-md cursor-pointer">
-                <td class="flex relative justify-center items-center w-[10%]">
-                    <p class="absolute group-hover:hidden">@contador</p>
+            @foreach (Cancion cancion in Model.canciones)
+            {
+                <tr id="row-@contador"
+                    class="group py-1 flex justify-center items-center w-[100%] hover:bg-zinc-600 rounded-md cursor-pointer"
+                    data-audio="/Audios/@cancion.AudioUrl" onclick="playSong(this)">
+                    <td class="flex relative justify-center items-center w-[10%]">
+                        <p class="absolute group-hover:hidden">@contador</p>
 
-                    <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
-                </td>
-                <td class="flex justify-center items-start flex-col w-[70%]">
-                    <h2 class="text-base hover:underline">@cancion.Titulo</h2>
-                    <h3 class="text-zinc-400 text-sm hover:underline group-hover:text-zinc-50" >@cancion.artista.NombreArtistico</h3>
-                </td>
-                <td class="flex justify-center items-center w-[20%]">
-                    @cancion.duration.ToString(@"mm\:ss")
-                </td>
-            </tr>
+                        <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
+                    </td>
+                    <td class="flex justify-center items-start flex-col w-[70%]">
+                        <h2 class="text-base hover:underline">@cancion.Titulo</h2>
+                        <h3 class="text-zinc-400 text-sm hover:underline group-hover:text-zinc-50">
+                            @cancion.artista.NombreArtistico</h3>
+                    </td>
+                    <td class="flex justify-center items-center w-[20%]" data-duration="@cancion.duration">
+                        <span class="track-time">@cancion.duration.ToString(@"mm\:ss")</span>
+                        <div class="playing-dots hidden ml-2 flex gap-1 text-green-400">
+                            <span class="dot-1">●</span>
+                            <span class="dot-2">●</span>
+                            <span class="dot-3">●</span>
+                        </div>
+
+                    </td>
+
+                </tr>
                 contador++;
             }
         </tbody>
     </table>
     <div class="flex justify-start items-center flex-row h-[100%] w-[100%]">
-        <img class="ml-4 h-44 w-44 object-cover object-center rounded-full" src="/Images/@Model.artista.ImageUrl" alt="">
+        <img class="ml-4 h-44 w-44 object-cover object-center rounded-full" src="/Images/@Model.artista.ImageUrl"
+            alt="">
         <div class="ml-8 flex flex-col justify-between items-baseline">
             <h1>@Model.artista.NombreArtistico</h1>
             <p>Nombre: @Model.artista.Nombre</p>
             <p>Apellido: @Model.artista.Apellido</p>
         </div>
     </div>
+    <audio id="player" controls class="w-full mt-6 px-4"></audio>
 </div>
+
+
+<script>
+    let currentAudio = new Audio();
+    let currentSrc = null;
+    let currentRow = null;
+
+    function playSong(row) {
+        const audioSrc = row.getAttribute("data-audio");
+
+        // Si es la misma canción → toggle play/pause
+        if (currentSrc === audioSrc) {
+            if (!currentAudio.paused) {
+                currentAudio.pause();
+                updateRowUI(row, false); // Pausado
+            } else {
+                currentAudio.play();
+                updateRowUI(row, true); // Reproduciendo
+            }
+            return;
+        }
+
+        // Nueva canción
+        currentAudio.src = audioSrc;
+        currentSrc = audioSrc;
+        currentAudio.currentRow = row;
+
+        resetAllRowsUI();
+        updateRowUI(row, true);
+
+        currentAudio.play();
+    }
+
+    // Sincronizar tiempo real con la UI del tr
+    currentAudio.addEventListener("timeupdate", () => {
+        if (!currentAudio.currentRow) return;
+
+        const timeSpan = currentAudio.currentRow.querySelector(".track-time");
+        timeSpan.textContent = formatTime(currentAudio.currentTime);
+    });
+
+    // Cuando termina → siguiente o volver al inicio
+    currentAudio.addEventListener("ended", () => {
+        const rows = Array.from(document.querySelectorAll("tbody tr"));
+        const index = rows.indexOf(currentAudio.currentRow);
+
+        let next = index + 1;
+        if (next >= rows.length) next = 0;
+
+        playSong(rows[next]);
+    });
+
+    // Dar formato mm:ss
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+    }
+
+    // Actualizar UI del tr activo
+    function updateRowUI(row, isPlaying) {
+        resetAllRowsUI();
+
+        if (isPlaying) {
+            row.classList.add("playing-row");
+            row.querySelector(".playing-dots").classList.remove("hidden");
+        } else {
+            row.querySelector(".playing-dots").classList.add("hidden");
+        }
+
+        currentAudio.currentRow = row;
+    }
+
+    // Limpiar UI de todos los rows
+    function resetAllRowsUI() {
+        document.querySelectorAll("tbody tr").forEach(r => {
+            r.classList.remove("playing-row");
+            const dots = r.querySelector(".playing-dots");
+            if (dots) dots.classList.add("hidden");
+        });
+    }
+</script>
+

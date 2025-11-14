@@ -3,6 +3,8 @@ using SpotifyMVC.Models;
 using Spotify.Core;
 using Spotify.Core.Persistencia;
 using Spotify.ReposDapper;
+using TagLib;
+
 
 namespace SpotifyMVC.Controllers
 {
@@ -86,17 +88,40 @@ namespace SpotifyMVC.Controllers
                         await model.ImageUrl.CopyToAsync(fileStream);
                     }
                 }
+                string? audioFileName = null;
+                TimeSpan duracionAudio = TimeSpan.Zero;
+
+                if (model.AudioUrl != null && model.AudioUrl.Length > 0)
+                {
+                    string audioFolder = Path.Combine(_env.WebRootPath, "Audios");
+                    if (!Directory.Exists(audioFolder))
+                        Directory.CreateDirectory(audioFolder);
+
+                    audioFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(model.AudioUrl.FileName);
+                    string audioPath = Path.Combine(audioFolder, audioFileName);
+
+                    using (var stream = new FileStream(audioPath, FileMode.Create))
+                    {
+                        await model.AudioUrl.CopyToAsync(stream);
+                    }
+
+                    // *** Obtener duración real con TagLib ***
+                    var audioTag = TagLib.File.Create(audioPath);
+                    duracionAudio = audioTag.Properties.Duration;
+                }
 
                 // Crear objeto Cancion
                 var cancion = new Cancion
                 {
                     Titulo = model.Titulo,
-                    duration = new TimeSpan(0, 3, 0), // default 3 min
+                    duration = duracionAudio,
                     artista = albumSeleccionado.artista,
                     album = albumSeleccionado,
                     genero = generoSeleccionado,
-                    ImageUrl = uniqueFileName
+                    ImageUrl = uniqueFileName,
+                    AudioUrl = audioFileName
                 };
+
 
                 // Guardar en la BD
                 var idAutoIncrementado = await repoCancion.Alta(cancion);

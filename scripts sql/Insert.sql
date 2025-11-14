@@ -32,10 +32,10 @@ CALL altaGenero('Reggae', @idGeneroReggae);
 CALL altaGenero('Ranchera', @idGeneroRanchera);
 
 -- Tabla Cancion
-CALL altaCancion(@idCancionOver, '1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png','Its Over, Isnt It', '00:02:17', @idAlbumSuenios, @idArtistaElRenacido, @idGeneroHipHop);
-CALL altaCancion(@idCancionRene, '1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png','René', '00:07:41', @idAlbumCaminos, @idArtistaElChapo, @idGeneroJazz);
-CALL altaCancion(@idCancionEstrella, '1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png','Como Estrella', '00:03:40', @idAlbumLuz, @idArtistalaMaquinaria, @idGeneroReggae);
-CALL altaCancion(@idCancionCelos,'1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png', 'Estos Celos', '00:03:10', @idAlbumEcos, @idArtistaTripleT, @idGeneroRanchera);
+CALL altaCancion(@idCancionOver, '1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png',NULL,'Its Over, Isnt It', '00:02:17', @idAlbumSuenios, @idArtistaElRenacido, @idGeneroHipHop);
+CALL altaCancion(@idCancionRene, '1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png',NULL,'René', '00:07:41', @idAlbumCaminos, @idArtistaElChapo, @idGeneroJazz);
+CALL altaCancion(@idCancionEstrella, '1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png',NULL,'Como Estrella', '00:03:40', @idAlbumLuz, @idArtistalaMaquinaria, @idGeneroReggae);
+CALL altaCancion(@idCancionCelos,'1f2b40ca-7d4f-4d01-91df-68865ab488c7_Screenshot_1.png', NULL,'Estos Celos', '00:03:10', @idAlbumEcos, @idArtistaTripleT, @idGeneroRanchera);
 
 -- Tabla Historial Reproduccion
 CALL altaHistorial_reproduccion(@idHistorialMiguel, @idUsuarioMiguel, @idCancionOver, '2024-07-01 10:00:00');

@@ -16,6 +16,7 @@ public class CrearCancionViewModel
     public byte GeneroId { get; set; }
 
     public IFormFile? ImageUrl { get; set; }
+    public IFormFile? AudioUrl { get; set; }
 
     public List<Artista> artistas { get; set; } = new();
     public List<Album> albums { get; set; } = new();

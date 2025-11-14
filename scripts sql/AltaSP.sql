@@ -62,13 +62,23 @@ END$$
 
 -- Tabla Cancion
 DELIMITER $$
+
 DROP PROCEDURE IF EXISTS altaCancion $$
-CREATE PROCEDURE altaCancion (OUT unidCancion INT UNSIGNED,unImageUrl VARCHAR(255), unTitulo VARCHAR(45), unDuration Time, unidAlbum INT UNSIGNED, unidArtista INT UNSIGNED, unidGenero TINYINT UNSIGNED)
+CREATE PROCEDURE altaCancion (
+    OUT unidCancion INT UNSIGNED,
+    IN unImageUrl VARCHAR(255),
+    IN unAudioUrl VARCHAR(255),
+    IN unTitulo VARCHAR(45),
+    IN unDuration TIME,
+    IN unidAlbum INT UNSIGNED,
+    IN unidArtista INT UNSIGNED,
+    IN unidGenero TINYINT UNSIGNED
+)
 BEGIN 
-	INSERT INTO Cancion(ImageUrl,Titulo,duration,idAlbum,idArtista,idGenero)
-		VALUES(unImageUrl,unTitulo,unDuration,unidAlbum,unidArtista,unidGenero);
-	
-	SET unidCancion = last_insert_id();
+    INSERT INTO Cancion (ImageUrl, AudioUrl, Titulo, duration, idAlbum, idArtista, idGenero)
+    VALUES (unImageUrl, unAudioUrl, unTitulo, unDuration, unidAlbum, unidArtista, unidGenero);
+
+    SET unidCancion = LAST_INSERT_ID();
 END $$
 
 -- Tabla Historial Reproduccion

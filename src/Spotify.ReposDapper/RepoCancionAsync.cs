@@ -14,6 +14,7 @@ public class RepoCancionAsync : RepoGenerico, IRepoCancionAsync
         parametros.Add("@unidArtista", cancion.artista.idArtista);
         parametros.Add("@unidGenero", cancion.genero.idGenero);
         parametros.Add("@unImageUrl", cancion.ImageUrl);
+        parametros.Add("@unAudioUrl", cancion.AudioUrl);
 
         await _conexion.ExecuteAsync("altaCancion", parametros, commandType: CommandType.StoredProcedure);
 
