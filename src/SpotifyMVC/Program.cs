@@ -22,6 +22,7 @@ builder.Services.AddScoped<IRepoAlbumAsync, RepoAlbumAsync>();
 builder.Services.AddScoped<IRepoGeneroAsync, RepoGeneroAsync>();
 builder.Services.AddScoped<IRepoUsuarioAsync, RepoUsuarioAsync>();
 builder.Services.AddScoped<IRepoNacionalidadAsync, RepoNacionalidadAsync>();
+builder.Services.AddScoped<IRepoPlaylistAsync,RepoPlaylistAsync>();
 
 // Authentication
 builder.Services.AddAuthentication(options =>
@@ -54,7 +55,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();   // ⭐ Faltaba esto
+app.UseAuthentication();   
 app.UseAuthorization();    // Debe ir después de Authentication
 
 app.MapControllerRoute(

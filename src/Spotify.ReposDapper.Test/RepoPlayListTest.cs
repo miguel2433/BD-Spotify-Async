@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Spotify.ReposDapper.Test;
-public class RepoPlayListTest : TestBase
+public class RepoPlaylistTest : TestBase
 {
-    RepoPlaylist _repoPlayList;
+    RepoPlaylist _repoPlaylist;
     RepoUsuario _repoUsuario;
     RepoCancion _repoCancion;
     
-    public RepoPlayListTest() : base()
+    public RepoPlaylistTest() : base()
     {
-        _repoPlayList = new RepoPlaylist(Conexion);
+        _repoPlaylist = new RepoPlaylist(Conexion);
         _repoUsuario = new RepoUsuario(Conexion);
         _repoCancion = new RepoCancion(Conexion);
     } 
@@ -20,7 +20,7 @@ public class RepoPlayListTest : TestBase
     [Fact]
     public void ListarOK()
     {
-        var playLists = _repoPlayList.Obtener();
+        var playLists = _repoPlaylist.Obtener();
 
         Assert.NotNull(playLists);
         Assert.NotEmpty(playLists);
@@ -32,18 +32,18 @@ public class RepoPlayListTest : TestBase
         var MuchasCanciones = _repoCancion.Obtener().ToList();
         var unUsuario = _repoUsuario.Obtener().First(); 
 
-        var Playlist_a_insertar = new PlayList 
+        var Playlist_a_insertar = new Playlist 
         {
             Nombre = "Tus labios me tocan",
             usuario = unUsuario,
             Canciones = MuchasCanciones
         };
 
-        var idPlayListAdarAlta = _repoPlayList.Alta(Playlist_a_insertar);
+        var idPlaylistAdarAlta = _repoPlaylist.Alta(Playlist_a_insertar);
 
-        var ListaPlaylists = _repoPlayList.Obtener();
+        var ListaPlaylists = _repoPlaylist.Obtener();
 
-        Assert.Contains(ListaPlaylists, variable => variable.idPlaylist == idPlayListAdarAlta);
+        Assert.Contains(ListaPlaylists, variable => variable.idPlaylist == idPlaylistAdarAlta);
     }
 
     [Theory]
@@ -53,17 +53,17 @@ public class RepoPlayListTest : TestBase
 
     public void DetalleIdPlaylist(uint idPlaylist)
     {
-        var PlayListPorId = _repoPlayList.DetalleDe(idPlaylist);
+        var PlaylistPorId = _repoPlaylist.DetalleDe(idPlaylist);
 
-        Assert.NotNull(PlayListPorId);
-        Assert.Equal(idPlaylist , PlayListPorId.idPlaylist);
+        Assert.NotNull(PlaylistPorId);
+        Assert.Equal(idPlaylist , PlaylistPorId.idPlaylist);
     }
 
     [Fact]
     public void DetallePlaylistOk()
     {
         // Act
-        var cancionesObtenidas = _repoPlayList.DetallePlaylist(8);
+        var cancionesObtenidas = _repoPlaylist.DetallePlaylist(8);
 
         // Assert
         Assert.NotNull(cancionesObtenidas);
@@ -74,7 +74,7 @@ public class RepoPlayListTest : TestBase
     public void DetallePlaylistNoExistente()
     {
         // Act
-        var cancionesObtenidas = _repoPlayList.DetallePlaylist(11);
+        var cancionesObtenidas = _repoPlaylist.DetallePlaylist(11);
 
         // Ass  ert
         Assert.Null(cancionesObtenidas);
@@ -84,7 +84,7 @@ public class RepoPlayListTest : TestBase
     public void DetallePlaylistVacia()
     {
         // Act
-        var cancionesObtenidas = _repoPlayList.DetallePlaylist(2);
+        var cancionesObtenidas = _repoPlaylist.DetallePlaylist(2);
 
         // Assert
         Assert.NotNull(cancionesObtenidas);

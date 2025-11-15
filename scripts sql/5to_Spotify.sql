@@ -171,6 +171,11 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------------------
+-- Modificar la tabla Playlist para incluir un índice de texto completo
+-- --------------------------------------------------------------------
+ALTER TABLE `5to_Spotify`.`Playlist`
+ADD FULLTEXT INDEX `ft_index_nombre` (`Nombre`);
 
 -- -----------------------------------------------------
 -- Table `5to_Spotify`.`TipoSuscripcion`

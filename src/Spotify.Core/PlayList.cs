@@ -1,6 +1,6 @@
 namespace Spotify.Core;
 
-public class PlayList
+public class Playlist
 {
     public uint idPlaylist { get; set; }
     public required string Nombre { get; set; }

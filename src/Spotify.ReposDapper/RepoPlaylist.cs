@@ -6,7 +6,7 @@ public class RepoPlaylist : RepoGenerico, IRepoPlaylist
     public RepoPlaylist(IDbConnection conexion) 
         : base(conexion) {}
 
-    public  uint Alta(PlayList playlist)
+    public  uint Alta(Playlist playlist)
     {
         var parametros = new DynamicParameters();
         parametros.Add("@unidPlaylist", direction: ParameterDirection.Output);
@@ -22,16 +22,16 @@ public class RepoPlaylist : RepoGenerico, IRepoPlaylist
         return playlist.idPlaylist;
     }
 
-    public  PlayList DetalleDe(uint idPlaylist)
+    public  Playlist DetalleDe(uint idPlaylist)
     {
-        var BuscarPlayListPorId = @"SELECT * FROM Playlist WHERE idPlaylist = @idPlaylist";
+        var BuscarPlaylistPorId = @"SELECT * FROM Playlist WHERE idPlaylist = @idPlaylist";
 
-        var Buscar =  _conexion.QueryFirstOrDefault<PlayList>(BuscarPlayListPorId, new {idPlaylist});
+        var Buscar =  _conexion.QueryFirstOrDefault<Playlist>(BuscarPlaylistPorId, new {idPlaylist});
 
         return Buscar; 
     }
 
-    public List<PlayList> Obtener () => EjecutarSPConReturnDeTipoLista<PlayList>("ObtenerPlayLists").ToList();
+    public List<Playlist> Obtener () => EjecutarSPConReturnDeTipoLista<Playlist>("ObtenerPlaylists").ToList();
     
     public  IList<Cancion>? DetallePlaylist(uint idPlaylist)
     {

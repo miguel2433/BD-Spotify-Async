@@ -135,6 +135,15 @@ BEGIN
 	VALUES (unidCancion, unidPlaylist);
 END$$
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS PlaylistsDeUsuario $$
+CREATE PROCEDURE PlaylistsDeUsuario (unidUsuario INT UNSIGNED)
+BEGIN 
+	SELECT * 
+	FROM Playlist
+	WHERE idUsuario = unidUsuario;
+END$$
+
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS MatcheoCancion $$
@@ -143,4 +152,14 @@ BEGIN
 	SELECT Titulo
 	FROM Cancion
 	WHERE MATCH(Titulo) AGAINST(CONCAT(InputCancion, "*") IN BOOLEAN MODE);
+END$$
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS MatcheoPlaylist $$
+CREATE PROCEDURE MatcheoPlaylist(InputPlaylist VARCHAR(45))
+BEGIN
+	SELECT Nombre
+	FROM Playlist
+	WHERE MATCH(Nombre) AGAINST(CONCAT(InputPlaylist, "*") IN BOOLEAN MODE);
 END$$
