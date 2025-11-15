@@ -56,7 +56,8 @@ public class UsuarioController : Controller
         {
             new Claim(ClaimTypes.NameIdentifier, usuario1.idUsuario.ToString()),
             new Claim(ClaimTypes.Name, usuario1.NombreUsuario),
-            new Claim(ClaimTypes.Email, usuario1.Email)
+            new Claim(ClaimTypes.Email, usuario1.Email),
+            new Claim(ClaimTypes.Role, usuario1.Rol.ToString())
         };
 
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -79,7 +80,8 @@ public class UsuarioController : Controller
         {
             new Claim(ClaimTypes.NameIdentifier, usuario1.idUsuario.ToString()),
             new Claim(ClaimTypes.Name, usuario1.NombreUsuario),
-            new Claim(ClaimTypes.Email, usuario1.Email)
+            new Claim(ClaimTypes.Email, usuario1.Email),
+            new Claim(ClaimTypes.Role, usuario1.Rol.ToString())
         };
 
 
@@ -97,7 +99,7 @@ public class UsuarioController : Controller
         if (User.Identity.IsAuthenticated)
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return View("Login");
+            return RedirectToAction("Login", "Usuario");
         }
         return RedirectToAction("Index", "Home"); 
 

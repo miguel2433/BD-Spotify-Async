@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `5to_Spotify`.`Usuario` (
   `NombreUsuario` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
   `Contrasenia` VARCHAR(64) NOT NULL,
+  `Rol` ENUM('Usuario', 'Admin') NOT NULL DEFAULT 'Usuario',
   `idNacionalidad` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`idUsuario`),
   UNIQUE INDEX `email` (`Email` ASC) VISIBLE,

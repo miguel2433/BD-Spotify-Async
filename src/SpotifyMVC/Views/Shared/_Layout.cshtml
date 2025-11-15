@@ -1,10 +1,13 @@
 ﻿@{
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
-    bool mostrarAside = !(controller == "Usuario" && (action == "Login" || action == "Registrar"));
+
+    bool esLoginOCrear = controller == "Usuario" && (action == "Login" || action == "Registrar");
+    bool mostrarAside = User.Identity.IsAuthenticated && !esLoginOCrear;
+
+    // Para main
+    string mainColSpan = mostrarAside ? "1" : "2";
 }
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,23 +31,26 @@
         <i class="ml-1 fa-brands fa-spotify text-xl text-green-500"></i>
         </a>
         <ul class="flex gap-4">
+        @if(User.IsInRole("Admin")){
             <li><a asp-controller="Album" asp-action="CrearAlbum" class="nav-link text-white">Albums</a></li>
             <li><a asp-controller="Cancion" asp-action="CrearCancion" class="nav-link text-white">Canciones</a></li>
             <li><a asp-controller="Artista" asp-action="CrearArtista" class="nav-link text-white">Artistas</a></li>
             <li><a asp-controller="Genero" asp-action="CrearGenero" class="nav-link text-white">Géneros</a></li>
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <li><a asp-controller="Usuario" asp-action="Login" class="nav-link text-white">Login</a></li>
-                <li><a asp-controller="Usuario" asp-action="Registrar" class="nav-link text-white">Registrarse</a></li>
-            }
-            else
-            {
-                <li>
-                    <form asp-controller="Usuario" asp-action="Logout" method="post">
-                        <button type="submit" class="text-white hover:text-red-400">Logout</button>
-                    </form>
-                </li>
-            }
+        }
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <li><a asp-controller="Usuario" asp-action="Login" class="nav-link text-white">Login</a></li>
+            <li><a asp-controller="Usuario" asp-action="Registrar" class="nav-link text-white">Registrarse</a></li>
+        }
+        else
+        {
+            <li>
+                <form asp-controller="Usuario" asp-action="Logout" method="post">
+                    <button type="submit" class="text-white hover:text-red-400">Logout</button>
+                </form>
+            </li>
+        }
+        
         </ul>
     </header>
 
@@ -56,7 +62,7 @@
             </div>
         </aside>
     }
-    <div class="row-span-2 pb-2 col-span-@(mostrarAside ? "1" : "2") overflow-auto">
+    <div class="row-span-2 pb-2 col-span-@mainColSpan overflow-auto">
         <main class="rounded-md px-2">
             @RenderBody()
         </main>

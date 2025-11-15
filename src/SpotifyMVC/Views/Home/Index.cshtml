@@ -65,11 +65,11 @@
 
                 <div class="carousel no-scrollbar flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4">
                 @foreach (Album album in Model.albunes) {
-                    <div class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
+                    <a asp-controller="Album" asp-route-id="@album.idAlbum" asp-action="DetalleAlbum" class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
                     <img class="h-44 w-44 rounded-md bg-black object-cover" src="/Images/@album.ImageUrl" alt="@album.Titulo">
                     <p class="mt-2 font-medium">@album.Titulo</p>
                     <p class="text-gray-500 text-sm">Album</p>
-                    </div>
+                    </a>
                 }
                 </div>
 

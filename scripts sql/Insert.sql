@@ -25,6 +25,10 @@ CALL altaUsuario ("Josu","josu@gmail.com","OMORIoyasumi",2,@idUsuarioJosu);
 CALL altaUsuario ("Rene","rene@gmail.com","Totoro",3,@idUsuarioRene);
 CALL altaUsuario ("Cheng","chengleonardo@gmail.com","capitalismonofunciona",4,@idUsuarioCheng);
 
+INSERT INTO Usuario (NombreUsuario, Email, Contrasenia, idNacionalidad, Rol)
+VALUES ("SoyAdmin", "admin@gmail.com", SHA2("123", 256), 2, 'Admin');
+
+
 -- Tabla Genero
 CALL altaGenero('Hip-hop/Rap', @idGeneroHipHop);
 CALL altaGenero('Jazz', @idGeneroJazz);
