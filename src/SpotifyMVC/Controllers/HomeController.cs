@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using SpotifyMVC.Models;
 using Spotify.Core.Persistencia;
 using Spotify.ReposDapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BD_Sporify._MVC.Controllers;
 
+[Authorize] 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

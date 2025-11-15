@@ -1,0 +1,53 @@
+@model CrearUsuarioModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Spotify.Core
+
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<div class="min-h-screen w-full flex justify-center items-center bg-zinc-900 rounded-md text-white">
+    <form class="flex flex-col gap-6 w-full max-w-md p-8 rounded-2xl border border-zinc-700 shadow-lg bg-zinc-950"
+          asp-action="Registrar" method="post">
+
+        <h1 class="text-3xl font-semibold text-green-500 text-center mb-2">Registrarse</h1>
+        <div class="flex flex-col w-full">
+            <label class="mb-1 text-sm text-zinc-400" asp-for="NombreUsuario">UserName</label>
+            <input type="text"
+                   class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 
+                          focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                   asp-for="NombreUsuario"
+                   placeholder="Ingresá tu UserName" />
+        </div>
+
+        <div class="flex flex-col w-full">
+            <label class="mb-1 text-sm text-zinc-400" asp-for="Email">Email</label>
+            <input type="email"
+                   class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 
+                          focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                   asp-for="Email"
+                   placeholder="Ingresá tu email" />
+        </div>
+
+        <div class="flex flex-col w-full">
+            <label asp-for="Contrasenia" class="mb-1 text-sm text-zinc-400">Contraseña</label>
+            <input type="password"
+                   class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700
+                          focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all"
+                   asp-for="Contrasenia"
+                   placeholder="Ingresá tu contraseña" />
+        </div>
+        <div class="flex flex-col w-full">
+            <label class="mb-1 text-sm text-zinc-400">Artista</label>
+            <select asp-for="NacionalidadId" asp-items="@(new SelectList(Model.Nacionalidades, "idNacionalidad", "Pais"))"
+                class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all">
+                <option value="">-- Selecciona una Nacionalidad --</option>
+            </select>
+        </div>
+        <button class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-md transition-all"
+                type="submit">
+            Registrarse
+        </button>
+        <a class="text-center hover:text-green-200/80" asp-action="Login">¿Ya tienes una cuenta? </a>
+    </form>
+</div>

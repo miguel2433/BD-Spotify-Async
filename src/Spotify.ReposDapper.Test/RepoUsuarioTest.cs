@@ -30,7 +30,7 @@ public class RepoUsuarioTest : TestBase
         var parametros = new Usuario 
         {
             NombreUsuario = "Sherklan12",
-            Gmail = "elquequieraperdr@gmail.com",
+            Email = "elquequieraperdr@gmail.com",
             Contrasenia = "RomanRiquelme",
             nacionalidad = unaNacionalidad
         };

@@ -13,7 +13,7 @@ public class RepoUsuarioAsync : RepoGenerico, IRepoUsuarioAsync
         parametros.Add("@unidUsuario", direction: ParameterDirection.Output);
         parametros.Add("@unNombreUsuario", usuario.NombreUsuario);
         parametros.Add("@unaContrasenia", usuario.Contrasenia);
-        parametros.Add("@unEmail", usuario.Gmail);
+        parametros.Add("@unEmail", usuario.Email);
         parametros.Add("@unidNacionalidad", usuario.nacionalidad.idNacionalidad);
         
 
@@ -29,6 +29,21 @@ public class RepoUsuarioAsync : RepoGenerico, IRepoUsuarioAsync
 
         // Ejecutar la consulta y obtener el primer resultado o 'null' si no existe.
         var usuario = await _conexion.QueryFirstOrDefaultAsync<Usuario>(BuscarUsuario, new { idUsuario });
+
+        return usuario;
+    }
+
+    public async Task<Usuario?> LoginUsuarioAsync(string Email, string Contrasenia)
+    {
+        var sql = @"SELECT * 
+                    FROM Usuario 
+                    WHERE Email = @Email 
+                    AND Contrasenia = SHA2(@Contrasenia, 256)";
+
+        var usuario = await _conexion.QueryFirstOrDefaultAsync<Usuario>(
+            sql,
+            new { Email, Contrasenia }
+        );
 
         return usuario;
     }

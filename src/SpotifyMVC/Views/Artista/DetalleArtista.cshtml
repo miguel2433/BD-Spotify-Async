@@ -8,7 +8,7 @@
 
 <div class="grid h-[100%] bg-zinc-900 w-[100%] grid-cols-1 grid-rows-[40vh_1fr_1fr] rounded-t-md">
     <div class="relative text-start flex justify-center rounded-md items-start flex-col">
-        <img class="absolute w-[100%] h-[100%] object-cover object-fit rounded-t-md" src="/images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
+        <img class="absolute w-[100%] h-[100%] object-cover object-fit rounded-t-md" src="/Images/@Model.artista.ImageUrl" alt="@Model.artista.NombreArtistico">
         <p class="ml-4 relative text-xl font-bold">Artista</p>
         <h1 class="ml-2 relative text-8xl font-bold">@Model.artista.NombreArtistico</h1>
     </div>
@@ -26,7 +26,7 @@
                         <i class="fa-solid fa-play text-zinc-400 text-base relative invisible group-hover:visible"></i>
                     </h1>
 
-                    <img class="h-10 w-10 object-cover rounded-md" src="/images/@album.ImageUrl" alt="@album.Titulo">
+                    <img class="h-10 w-10 object-cover rounded-md" src="/Images/@album.ImageUrl" alt="@album.Titulo">
                     <h1 class="text-md">@album.Titulo</h1>
                 </div>
 
@@ -43,7 +43,7 @@
             <div class="flex flex-row justify-center gap-5   items-center">
                 @foreach(Cancion cancion in Model.canciones){
                     <div class="flex flex-col justify-center items-center">
-                        <img class="h-44 w-44 rounded-md" src="/images/@cancion.ImageUrl" alt="@cancion.Titulo">
+                        <img class="h-44 w-44 rounded-md" src="/Images/@cancion.ImageUrl" alt="@cancion.Titulo">
                         <div class="flex justify-start items-center flex-col ">
                             <h1 class="text-lg text-start">@cancion.Titulo</h1>
                             <p class="text-sm text-zinc-500">@cancion.album.fechaLanzamiento.ToString("yyyy")</p>

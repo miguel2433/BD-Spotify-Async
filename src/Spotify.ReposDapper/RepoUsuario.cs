@@ -11,7 +11,7 @@ public class RepoUsuario : RepoGenerico, IRepoUsuario
         parametros.Add("@unidUsuario", direction: ParameterDirection.Output);
         parametros.Add("@unNombreUsuario", usuario.NombreUsuario);
         parametros.Add("@unaContrasenia", usuario.Contrasenia);
-        parametros.Add("@unEmail", usuario.Gmail);
+        parametros.Add("@unEmail", usuario.Email);
         parametros.Add("@unidNacionalidad", usuario.nacionalidad.idNacionalidad);
 
         _conexion.Execute("altaUsuario", parametros, commandType: CommandType.StoredProcedure);

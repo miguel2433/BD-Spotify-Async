@@ -2,32 +2,50 @@ using MySqlConnector;
 using Spotify.Core.Persistencia;
 using Spotify.ReposDapper;
 using System.Data;
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 var connectionString = builder.Configuration.GetConnectionString("MySQL");
 
-// Registrar IDbConnection para inyección de dependencias
+// Registrar IDbConnection
 builder.Services.AddScoped<IDbConnection>(sp => new MySqlConnection(connectionString));
 
-
-// Add services to the container.
+// MVC
 builder.Services.AddControllersWithViews();
 
+// Repos
 builder.Services.AddScoped<IRepoCancionAsync, RepoCancionAsync>();
 builder.Services.AddScoped<IRepoArtistaAsync, RepoArtistaAsync>();
 builder.Services.AddScoped<IRepoAlbumAsync, RepoAlbumAsync>();
 builder.Services.AddScoped<IRepoGeneroAsync, RepoGeneroAsync>();
+builder.Services.AddScoped<IRepoUsuarioAsync, RepoUsuarioAsync>();
+builder.Services.AddScoped<IRepoNacionalidadAsync, RepoNacionalidadAsync>();
+
+// Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie(options =>
+{
+    options.LoginPath = "/Usuario/Login";
+    options.LogoutPath = "/Usuario/Logout";
+    options.AccessDeniedPath = "/Home/AccessDenied";
+});
+
+// Authorization
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -36,7 +54,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();   // ⭐ Faltaba esto
+app.UseAuthorization();    // Debe ir después de Authentication
 
 app.MapControllerRoute(
     name: "default",

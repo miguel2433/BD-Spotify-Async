@@ -17,7 +17,7 @@
                 @foreach (Artista artista in Model.artistas) {
                     <div class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
                     <a asp-route-id="@artista.idArtista" asp-action="DetalleArtista" asp-controller="Artista">
-                        <img class="h-44 w-44 rounded-md bg-black object-cover" src="/images/@artista.ImageUrl" alt="@artista.Nombre">
+                        <img class="h-44 w-44 rounded-md bg-black object-cover" src="/Images/@artista.ImageUrl" alt="@artista.Nombre">
                         <p class="mt-2 font-medium">@artista.NombreArtistico</p>
                         <p class="text-gray-500 text-sm">Artista</p>
                     </a>
@@ -42,7 +42,7 @@
                 <div class="carousel no-scrollbar flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4">
                 @foreach (Cancion cancion in Model.canciones) {
                     <a asp-route-id="@cancion.album.idAlbum" asp-controller="Album" asp-action="DetalleAlbum" class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
-                        <img class="h-44 w-44 rounded-full bg-black object-cover" src="/images/@cancion.ImageUrl" alt="@cancion.Titulo">
+                        <img class="h-44 w-44 rounded-full bg-black object-cover" src="/Images/@cancion.ImageUrl" alt="@cancion.Titulo">
                         <p class="mt-2 font-medium">@cancion.Titulo</p>
                         <p class="text-gray-500 text-sm">Cancion</p>
                     </a>
@@ -66,7 +66,7 @@
                 <div class="carousel no-scrollbar flex overflow-x-auto scroll-smooth snap-x snap-mandatory gap-4">
                 @foreach (Album album in Model.albunes) {
                     <div class="carousel__slide snap-center flex-shrink-0 text-center p-2 flex flex-col items-center w-48">
-                    <img class="h-44 w-44 rounded-md bg-black object-cover" src="/images/@album.ImageUrl" alt="@album.Titulo">
+                    <img class="h-44 w-44 rounded-md bg-black object-cover" src="/Images/@album.ImageUrl" alt="@album.Titulo">
                     <p class="mt-2 font-medium">@album.Titulo</p>
                     <p class="text-gray-500 text-sm">Album</p>
                     </div>

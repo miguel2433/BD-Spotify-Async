@@ -3,9 +3,13 @@ using SpotifyMVC.Models;
 using Spotify.Core;
 using Spotify.Core.Persistencia;
 using Spotify.ReposDapper;
+using Microsoft.AspNetCore.Authorization;
+
+
 
 namespace SpotifyMVC.Controllers
 {
+    [Authorize]
     public class AlbumController : Controller
     {
         private readonly ILogger<AlbumController> _logger;
