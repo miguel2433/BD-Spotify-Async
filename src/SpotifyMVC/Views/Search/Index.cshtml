@@ -1,0 +1,108 @@
+@model SearchViewModel
+@{
+    ViewData["Title"] = "Buscar";
+}
+
+<div class="p-4">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">Resultados para: <span class="text-green-500">@Model.Query</span></h1>
+        <form asp-controller="Search" asp-action="Index" method="get" class="flex items-center bg-zinc-800/80 hover:bg-zinc-800 rounded-full px-4 py-2 w-[28rem] max-w-[45vw] focus-within:ring-2 ring-green-500 transition">
+            <i class="fa-solid fa-magnifying-glass text-zinc-400 mr-3"></i>
+            <input type="text" name="q" value="@Model.Query" placeholder="Buscar canciones, álbumes, artistas o playlists..." class="bg-transparent text-white placeholder-zinc-400 outline-none w-full" />
+        </form>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <!-- Canciones -->
+        <section class="bg-zinc-900 rounded-lg p-4">
+            <h2 class="text-xl font-semibold mb-3 flex items-center gap-2"><i class="fa-solid fa-music text-green-500"></i> Canciones</h2>
+            @if (Model.Canciones == null || !Model.Canciones.Any())
+            {
+                <p class="text-zinc-400">Sin resultados.</p>
+            }
+            else
+            {
+                <ul class="divide-y divide-zinc-800">
+                    @foreach (var c in Model.Canciones)
+                    {
+                        <li class="py-2 flex items-center justify-between">
+                            <div class="min-w-0">
+                                <a asp-controller="Album" asp-action="DetalleAlbum" asp-route-id="@c.album.idAlbum" class="text-white hover:underline truncate block">@c.Titulo</a>
+                                <div class="text-sm text-zinc-400 truncate">@c.artista?.NombreArtistico · @c.album?.Titulo</div>
+                            </div>
+                            <a asp-controller="Album" asp-action="DetalleAlbum" asp-route-id="@c.album.idAlbum" class="text-green-500 hover:text-green-400"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+
+        <!-- Álbumes -->
+        <section class="bg-zinc-900 rounded-lg p-4">
+            <h2 class="text-xl font-semibold mb-3 flex items-center gap-2"><i class="fa-solid fa-compact-disc text-green-500"></i> Álbumes</h2>
+            @if (Model.Albums == null || !Model.Albums.Any())
+            {
+                <p class="text-zinc-400">Sin resultados.</p>
+            }
+            else
+            {
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    @foreach (var a in Model.Albums)
+                    {
+                        <a asp-controller="Album" asp-action="DetalleAlbum" asp-route-id="@a.idAlbum" class="group bg-zinc-800/50 hover:bg-zinc-800 rounded-md p-3 transition-colors">
+                            <img src="/Images/@a.ImageUrl" class="w-full h-32 object-cover rounded mb-2" />
+                            <div class="font-medium truncate">@a.Titulo</div>
+                            <div class="text-sm text-zinc-400 truncate">@a.artista?.NombreArtistico</div>
+                        </a>
+                    }
+                </div>
+            }
+        </section>
+
+        <!-- Artistas -->
+        <section class="bg-zinc-900 rounded-lg p-4">
+            <h2 class="text-xl font-semibold mb-3 flex items-center gap-2"><i class="fa-solid fa-user text-green-500"></i> Artistas</h2>
+            @if (Model.Artistas == null || !Model.Artistas.Any())
+            {
+                <p class="text-zinc-400">Sin resultados.</p>
+            }
+            else
+            {
+                <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    @foreach (var ar in Model.Artistas)
+                    {
+                        <li>
+                            <a asp-controller="Artista" asp-action="DetalleArtista" asp-route-id="@ar.idArtista" class="block bg-zinc-800/50 hover:bg-zinc-800 rounded-md p-3 text-center transition-colors">
+                                <img src="/Images/@ar.ImageUrl" class="w-24 h-24 object-cover rounded-full mx-auto mb-2" />
+                                <div class="font-medium truncate">@ar.NombreArtistico</div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+
+        <!-- Playlists -->
+        <section class="bg-zinc-900 rounded-lg p-4">
+            <h2 class="text-xl font-semibold mb-3 flex items-center gap-2"><i class="fa-solid fa-list text-green-500"></i> Playlists</h2>
+            @if (Model.Playlists == null || !Model.Playlists.Any())
+            {
+                <p class="text-zinc-400">Sin resultados.</p>
+            }
+            else
+            {
+                <ul class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    @foreach (var p in Model.Playlists)
+                    {
+                        <li>
+                            <a asp-controller="Playlist" asp-action="DetallePlaylist" asp-route-id="@p.idPlaylist" class="block bg-zinc-800/50 hover:bg-zinc-800 rounded-md p-3 transition-colors">
+                                <img src="/Images/@p.ImageUrl" class="w-full h-32 object-cover rounded mb-2" />
+                                <div class="font-medium truncate">@p.Nombre</div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+    </div>
+</div>

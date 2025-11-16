@@ -1,0 +1,22 @@
+@using Spotify.Core
+@model List<Playlist>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="text-zinc-400 text-sm px-2 py-4">No se encontraron playlists.</div>
+}
+else
+{
+    @foreach (var p in Model)
+    {
+        <a asp-route-id="@p.idPlaylist"
+           asp-controller="Playlist" asp-action="DetallePlaylist"
+           class="flex items-center gap-3 hover:bg-zinc-800 p-2 rounded-md cursor-pointer">
+
+            <img src="/Images/@p.ImageUrl"
+                 class="h-12 w-12 rounded-md bg-zinc-400 object-cover shrink-0" />
+
+            <span class="text-white truncate">@p.Nombre</span>
+        </a>
+    }
+}

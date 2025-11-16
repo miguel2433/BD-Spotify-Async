@@ -1,0 +1,45 @@
+@model CrearPlaylistViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+
+@{
+    ViewData["Title"] = "Crear Artista";
+}
+
+
+
+<div class="min-h-screen w-full flex justify-center items-center bg-zinc-900 rounded-md text-white">
+<form  class="flex flex-col gap-6 w-full max-w-md p-8 rounded-2xl border border-zinc-700 shadow-lg bg-zinc-950" asp-action="CrearPlaylist" enctype="multipart/form-data" method="post">
+    
+    <h1 class="text-3xl font-semibold text-green-500 text-center mb-2">Crear Playlist</h1>
+    
+    <div class="flex flex-col w-full">
+        <label class="mb-1 text-sm text-zinc-400" asp-for="playlist.Nombre">Nombre de la playlist</label>
+        <input class="bg-zinc-800 px-3 py-2 rounded-md outline-none border border-zinc-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all" asp-for="playlist.Nombre" placeholder="Nombre de la lista" />
+    </div>
+
+        <div class="flex flex-col w-full">
+            <label asp-for="ImageUrl" class="mb-1 text-sm text-zinc-400">Selecciona la imagen</label>
+
+            <label for="file-upload"
+                class="cursor-pointer bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md text-center transition-colors">
+                Elegir archivo
+            </label>
+            <input id="file-upload" type="file" asp-for="ImageUrl" required class="hidden"
+                onchange="updateFileName(this)" />
+
+            <span id="file-name" class="text-xs text-zinc-500 mt-1 italic"></span>
+        </div>
+    <button class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-md transition-all" type="submit">Guardar</button>
+</form>
+</div>
+
+
+<script>
+    function updateFileName(input) {
+        const fileNameSpan = document.getElementById('file-name');
+        fileNameSpan.textContent = input.files.length > 0
+            ? input.files[0].name
+            : '';
+    }
+</script>

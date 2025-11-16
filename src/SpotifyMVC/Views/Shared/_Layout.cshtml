@@ -1,4 +1,4 @@
-﻿@{
+@{
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
 
@@ -30,6 +30,10 @@
         SpotifyMVC
         <i class="ml-1 fa-brands fa-spotify text-xl text-green-500"></i>
         </a>
+        <form asp-controller="Search" asp-action="Index" method="get" class="hidden md:flex items-center bg-zinc-800/80 hover:bg-zinc-800 rounded-full px-4 py-2 w-[28rem] max-w-[45vw] focus-within:ring-2 ring-green-500 transition">
+            <i class="fa-solid fa-magnifying-glass text-zinc-400 mr-3"></i>
+            <input type="text" name="q" value='@Context.Request.Query["q"]' placeholder="Buscar canciones, álbumes, artistas o playlists..." class="bg-transparent text-white placeholder-zinc-400 outline-none w-full" />
+        </form>
         <ul class="flex gap-4">
         @if(User.IsInRole("Admin")){
             <li><a asp-controller="Album" asp-action="CrearAlbum" class="nav-link text-white">Albums</a></li>
@@ -56,11 +60,7 @@
 
     @if (mostrarAside)
     {
-        <aside class="row-span-2 col-span-1 px-2 pb-2 flex justify-center items-center">
-            <div class="flex justify-center items-center h-full w-full rounded-md bg-zinc-900">
-                <h1 class="selft-start">Aside</h1>
-            </div>
-        </aside>
+        @await Component.InvokeAsync("AsidePlaylists")
     }
     <div class="row-span-2 pb-2 col-span-@mainColSpan overflow-auto">
         <main class="rounded-t-md px-2">

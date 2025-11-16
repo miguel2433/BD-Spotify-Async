@@ -4,6 +4,7 @@ using SpotifyMVC.Models;
 using Spotify.Core.Persistencia;
 using Spotify.ReposDapper;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BD_Sporify._MVC.Controllers;
 
@@ -14,11 +15,13 @@ public class HomeController : Controller
     private readonly IRepoArtistaAsync repoArtista;
     private readonly IRepoAlbumAsync repoAlbum;
     private readonly IRepoCancionAsync repoCancion;
-    public HomeController(ILogger<HomeController> logger,IRepoCancionAsync repoCancion, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
+    private readonly IRepoPlaylistAsync repoPlaylist;
+    public HomeController(ILogger<HomeController> logger,IRepoPlaylistAsync repoPLaylist,IRepoCancionAsync repoCancion, IRepoArtistaAsync repoArtista, IRepoAlbumAsync repoAlbum)
     {
         this.repoAlbum = repoAlbum;
         this.repoArtista = repoArtista;
         this.repoCancion = repoCancion;
+        this.repoPlaylist = repoPLaylist;
         _logger = logger;
     }
 

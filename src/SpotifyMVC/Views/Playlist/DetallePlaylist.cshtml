@@ -1,0 +1,259 @@
+@using Spotify.Core
+@model Playlist
+@{
+    ViewData["Title"] = "DetalleAlbum";
+    int contador = 1;
+}
+
+<div class="bg-zinc-900 rounded-md grid grid-rows-[30vh_auto_auto] grid-cols-1 pb-10">
+    <div class="bg-[rgb(35,52,73)] flex justify-start flex-row items-center rounded-t-md">
+        <img class="hover:scale-105 duration-100 cursor-pointer ml-4 object-cover object-center h-44 rounded-lg w-44"
+            src="/Images/@Model.ImageUrl" alt="@Model.Nombre">
+        <div class="ml-4 mb-3 flex flex-col items-start relative flex-grow">
+            <p class="text-base font-medium">Playlist</p>
+            <h1 class="left-8 text-5xl tracking-normal font-bold">@Model.Nombre</h1>
+            <p class="text-zinc-400">Canciones: @Model.Canciones.Count()</p>
+            
+            <!-- Botón flotante en la esquina inferior derecha -->
+            <div class="absolute -bottom-3 right-0">
+                <button onclick="abrirModal()" class="bg-green-600 hover:bg-green-500 text-white font-medium py-3 px-6 rounded-full transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 shadow-lg flex items-center">
+                    <i class="fas fa-plus mr-2"></i>Agregar Canción
+                </button>
+            </div>
+        </div>
+
+        <div id="modal-container" class="fixed inset-0 z-50 hidden"></div>
+
+    </div>
+    <table class="min-h-[50vh] fondo-gradiente-detalle-artista flex justify-start items-center flex-col">
+        <thead class="border-b-2 mb-4 pb-2 w-[90%]">
+            <tr class="text-zinc-400 flex justify-center items-center w-[100%]">
+                <th class="flex justify-center items-center w-[10%]">#</th>
+                <th class="flex justify-start items-start w-[70%]">Titulo</th>
+                <th class="flex justify-center items-center w-[20%]"><i class="fa-regular fa-clock text-sm"></i></th>
+            </tr>
+        </thead>
+        <tbody class="w-[90%]">
+            @foreach (Cancion cancion in Model.Canciones)
+            {
+                <tr id="row-@contador"
+                    class="group song-row py-1 flex justify-center items-center w-[100%] hover:bg-zinc-700/40 rounded-md cursor-pointer transition-colors"
+                    data-audio="/Audios/@cancion.AudioUrl" onclick="playSong(this)">
+
+                    <td class="flex relative justify-center items-center w-[10%]">
+                        <p class="absolute track-number group-hover:opacity-0 transition-opacity">@contador</p>
+
+
+                        <i class="fa-solid fa-play play-icon text-zinc-400/40 text-base relative opacity-0 group-hover:opacity-100 transition-opacity"></i>
+
+
+                    </td>
+                    <td class="flex justify-center items-start flex-col w-[70%]">
+                        <h2 class="text-base hover:underline">@cancion.Titulo</h2>
+                        <h3 class="text-zinc-400 text-sm hover:underline group-hover:text-zinc-50">
+                            @cancion.artista.NombreArtistico</h3>
+                    </td>
+                    <td class="flex justify-center items-center w-[20%]" data-duration="@cancion.duration">
+                        <span class="track-time">@cancion.duration.ToString(@"mm\:ss")</span>
+                        <div class="playing-dots hidden ml-2 flex gap-1 text-green-400">
+                            <span class="dot-1">●</span>
+                            <span class="dot-2">●</span>
+                            <span class="dot-3">●</span>
+                        </div>
+
+                    </td>
+
+                </tr>
+                contador++;
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    let currentAudio = new Audio();
+    let currentSrc = null;
+    let currentRow = null;
+
+    function playSong(row) {
+        const audioSrc = row.getAttribute("data-audio");
+
+        // Si es la misma canción → toggle play/pause
+        if (currentSrc === audioSrc) {
+            if (!currentAudio.paused) {
+                currentAudio.pause();
+                updateRowUI(row, false); // Pausado
+            } else {
+                currentAudio.play();
+                updateRowUI(row, true); // Reproduciendo
+            }
+            return;
+        }
+
+        // Nueva canción
+        currentAudio.src = audioSrc;
+        currentSrc = audioSrc;
+        currentAudio.currentRow = row;
+
+        resetAllRowsUI();
+        updateRowUI(row, true);
+
+        currentAudio.play();
+    }
+
+    // Sincronizar tiempo real con la UI del tr
+    currentAudio.addEventListener("timeupdate", () => {
+        if (!currentAudio.currentRow) return;
+
+        const timeSpan = currentAudio.currentRow.querySelector(".track-time");
+        timeSpan.textContent = formatTime(currentAudio.currentTime);
+    });
+
+    // Cuando termina → siguiente o volver al inicio
+    currentAudio.addEventListener("ended", () => {
+        const rows = Array.from(document.querySelectorAll("tbody tr"));
+        const index = rows.indexOf(currentAudio.currentRow);
+
+        let next = index + 1;
+        if (next >= rows.length) next = 0;
+
+        playSong(rows[next]);
+    });
+
+    // Dar formato mm:ss
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = Math.floor(sec % 60);
+        return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+    }
+
+    // Actualizar UI del tr activo
+    function updateRowUI(row, isPlaying) {
+        resetAllRowsUI();
+
+        const playIcon = row.querySelector(".play-icon");
+
+        if (isPlaying) {
+            // Fondo verde
+            row.classList.add("playing-row");
+
+            // Puntos
+            row.querySelector(".playing-dots").classList.remove("hidden");
+
+            // Ícono verde
+            playIcon.classList.add("playing");
+        } else {
+            row.querySelector(".playing-dots").classList.add("hidden");
+
+            // Ícono vuelve a gris
+            playIcon.classList.remove("playing");
+        }
+
+        currentAudio.currentRow = row;
+    }
+
+    // Limpiar UI de todos los rows
+    function resetAllRowsUI() {
+        document.querySelectorAll("tbody tr").forEach(r => {
+            r.classList.remove("playing-row");
+
+            const dots = r.querySelector(".playing-dots");
+            if (dots) dots.classList.add("hidden");
+
+            const icon = r.querySelector(".play-icon");
+            if (icon) icon.classList.remove("playing");
+        });
+    }
+    async function abrirModal() {
+        const modalContainer = document.getElementById("modal-container");
+        
+        // Mostrar contenedor con animación
+        modalContainer.classList.remove('hidden');
+        modalContainer.classList.add('flex');
+        
+        try {
+            // Mostrar loader mientras se carga
+            modalContainer.innerHTML = `
+                <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+                    <div class="bg-gradient-to-br from-zinc-800 to-zinc-900 p-6 rounded-xl w-full max-w-md transform transition-all duration-300 scale-95 opacity-0 animate-fadeIn">
+                        <div class="flex justify-center items-center py-8">
+                            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+                        </div>
+                    </div>
+                </div>`;
+            
+            // Cargar el contenido del modal
+            const response = await fetch(`/Playlist/AgregarCancion?idPlaylist=@Model.idPlaylist`);
+            
+            if (!response.ok) {
+                throw new Error('Error al cargar el formulario');
+            }
+            
+            const html = await response.text();
+            
+            // Reemplazar con el contenido real
+            modalContainer.innerHTML = html;
+            
+            // Agregar clase de animación después de un pequeño retraso
+            setTimeout(() => {
+                const modalContent = modalContainer.querySelector('div > div');
+                if (modalContent) {
+                    modalContent.classList.add('animate-fadeIn');
+                }
+            }, 10);
+            
+        } catch (error) {
+            console.error('Error al cargar el modal:', error);
+            modalContainer.innerHTML = `
+                <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 p-4" onclick="cerrarModal()">
+                    <div class="bg-gradient-to-br from-zinc-800 to-zinc-900 p-6 rounded-xl w-full max-w-md border border-red-500/30">
+                        <div class="text-center">
+                            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-500/20 mb-4">
+                                <i class="fas fa-exclamation-circle text-red-500 text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-white mb-2">Error al cargar</h3>
+                            <p class="text-sm text-zinc-400 mb-6">No se pudo cargar el formulario. Por favor, intente nuevamente.</p>
+                            <button onclick="cerrarModal()" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+    }
+    
+    function cerrarModal() {
+        const modalContainer = document.getElementById("modal-container");
+        const modalContent = modalContainer.querySelector('div > div');
+        
+        if (modalContent) {
+            // Agregar animación de salida
+            modalContent.classList.remove('animate-fadeIn');
+            modalContent.classList.add('animate-fadeOut');
+            
+            // Esperar a que termine la animación antes de ocultar
+            setTimeout(() => {
+                modalContainer.classList.add('hidden');
+                modalContainer.classList.remove('flex');
+                modalContainer.innerHTML = '';
+                // Recargar solo si se realizó una acción exitosa
+                if (window.location.search.includes('success=true')) {
+                    window.location.href = window.location.pathname;
+                }
+            }, 300);
+        } else {
+            modalContainer.classList.add('hidden');
+            modalContainer.classList.remove('flex');
+            modalContainer.innerHTML = '';
+        }
+    }
+    
+    // Cerrar con la tecla ESC
+    document.addEventListener('keydown', function(e) {
+        const modalContainer = document.getElementById("modal-container");
+        if (e.key === 'Escape' && !modalContainer.classList.contains('hidden')) {
+            cerrarModal();
+        }
+    });
+</script>

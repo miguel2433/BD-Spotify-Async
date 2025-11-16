@@ -111,3 +111,14 @@ BEGIN
 	FROM Playlist 
 	WHERE MATCH(Nombre) AGAINST(unNombre IN NATURAL LANGUAGE MODE);
 END $$
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS BuscarCancionesDeUnaPlaylist $$
+CREATE PROCEDURE BuscarCancionesDeUnaPlaylist(IN unIdPlaylist INT UNSIGNED)
+BEGIN
+    SELECT c.*
+    FROM Cancion_Playlist cp
+    INNER JOIN Cancion c ON c.idCancion = cp.idCancion
+    WHERE cp.idPlaylist = unIdPlaylist;
+END $$

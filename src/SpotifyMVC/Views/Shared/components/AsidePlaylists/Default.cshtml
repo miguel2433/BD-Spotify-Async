@@ -1,0 +1,56 @@
+@using Spotify.Core
+@model List<Playlist>
+
+<aside class="row-span-2 col-span-1 px-2 pb-2 flex flex-col w-[22vw]">
+
+    <!-- Contenedor principal -->
+    <div class="p-2 flex flex-col w-full rounded-md bg-zinc-900 gap-4 h-full">
+
+        <!-- Encabezado -->
+        <div class="w-full flex items-center justify-between px-2">
+            <h1 class="font-bold">Tu biblioteca</h1>
+            <a asp-controller="Playlist" asp-action="CrearPlaylist"
+               class="px-2 rounded-full hover:bg-zinc-200/40 font-light text-3xl hover:text-zinc-400 cursor-pointer">
+                +
+            </a>
+        </div>
+
+        <!-- Si no hay playlists -->
+        <div class="relative">
+            <i class="fa-solid fa-magnifying-glass text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input id="playlist-search-input" type="text" placeholder="Buscar playlists" class="w-full bg-zinc-800/80 hover:bg-zinc-800 pl-10 pr-3 py-2 rounded-md placeholder-zinc-400 outline-none focus:ring-2 ring-green-500 transition" />
+        </div>
+
+        <div id="playlists-list" class="flex-1 overflow-y-auto px-1 pr-2 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
+            @await Html.PartialAsync("~/Views/Playlist/_PlaylistsList.cshtml", Model)
+        </div>
+
+    </div>
+
+</aside>
+
+<script>
+    (function () {
+        const input = document.getElementById('playlist-search-input');
+        const list = document.getElementById('playlists-list');
+        if (!input || !list) return;
+
+        let timer = null;
+        input.addEventListener('input', function () {
+            const term = input.value.trim();
+            if (timer) clearTimeout(timer);
+
+            timer = setTimeout(async () => {
+                try {
+                    const qs = term ? `?term=${encodeURIComponent(term)}` : '';
+                    const res = await fetch(`/Playlist/Buscar${qs}`);
+                    if (!res.ok) throw new Error('Error HTTP ' + res.status);
+                    const html = await res.text();
+                    list.innerHTML = html;
+                } catch (e) {
+                    // fallback silencioso
+                }
+            }, 250);
+        });
+    })();
+</script>
