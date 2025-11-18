@@ -96,7 +96,7 @@
                     {
                         <li>
                             <a asp-controller="Playlist" asp-action="DetallePlaylist" asp-route-id="@p.idPlaylist" class="block bg-zinc-800/50 hover:bg-zinc-800 rounded-md p-3 transition-colors">
-                                <img src="/Images/@p.ImageUrl" class="w-full h-32 object-cover rounded mb-2" />
+                                <img src="/Images/@(p.ImageUrl ?? "a37243da-a3c8-4a24-af8c-5c145499e951_megustaSpotify.jpeg")" class="w-full h-32 object-cover rounded mb-2" />
                                 <div class="font-medium truncate">@p.Nombre</div>
                             </a>
                         </li>

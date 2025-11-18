@@ -13,7 +13,7 @@ else
            asp-controller="Playlist" asp-action="DetallePlaylist"
            class="flex items-center gap-3 hover:bg-zinc-800 p-2 rounded-md cursor-pointer">
 
-            <img src="/Images/@p.ImageUrl"
+            <img src="/Images/@(p.ImageUrl ?? "a37243da-a3c8-4a24-af8c-5c145499e951_megustaSpotify.jpeg")"
                  class="h-12 w-12 rounded-md bg-zinc-400 object-cover shrink-0" />
 
             <span class="text-white truncate">@p.Nombre</span>
