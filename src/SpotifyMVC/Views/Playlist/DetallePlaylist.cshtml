@@ -8,7 +8,7 @@
 <div class="bg-zinc-900 rounded-md grid grid-rows-[30vh_auto_auto] grid-cols-1 pb-10">
     <div class="bg-[rgb(35,52,73)] flex justify-start flex-row items-center rounded-t-md">
         <img class="hover:scale-105 duration-100 cursor-pointer ml-4 object-cover object-center h-44 rounded-lg w-44"
-            src="/Images/@Model.ImageUrl" alt="@Model.Nombre">
+            src="/Images/@(p.ImageUrl ?? "a37243da-a3c8-4a24-af8c-5c145499e951_megustaSpotify.jpeg")" alt="@Model.Nombre">
         <div class="ml-4 mb-3 flex flex-col items-start relative flex-grow">
             <p class="text-base font-medium">Playlist</p>
             <h1 class="left-8 text-5xl tracking-normal font-bold">@Model.Nombre</h1>
