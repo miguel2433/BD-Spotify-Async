@@ -94,7 +94,7 @@ namespace SpotifyMVC.Controllers
                     ModelState.AddModelError("", "Error al crear el Artista: " + ex.Message);
                     return View(model);
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             // Si hay error, recargar lista de artistas

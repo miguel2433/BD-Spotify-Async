@@ -127,7 +127,7 @@ namespace SpotifyMVC.Controllers
                 var idAutoIncrementado = await repoCancion.Alta(cancion);
 
                 TempData["SuccessMessage"] = "Canción creada correctamente";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
             catch (Exception ex)
             {

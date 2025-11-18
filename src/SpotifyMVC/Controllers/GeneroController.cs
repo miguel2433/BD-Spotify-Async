@@ -32,7 +32,7 @@ public class GeneroController : Controller
     {
         await repoGenero.Alta(generoCrear);
 
-        return RedirectToAction("Index");
+        return RedirectToAction("Index","Home");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -101,7 +101,7 @@ public class ArtistaController : Controller
             }
 
 
-        return RedirectToAction("Index");
+        return RedirectToAction("Index","Home");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
