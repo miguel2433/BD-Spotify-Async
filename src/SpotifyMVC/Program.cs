@@ -4,6 +4,8 @@ using Spotify.ReposDapper;
 using System.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddScoped<IDbConnection>(sp => new MySqlConnection(connectionSt
 
 // MVC
 builder.Services.AddControllersWithViews();
+
 
 // Repos
 builder.Services.AddScoped<IRepoCancionAsync, RepoCancionAsync>();
@@ -43,6 +46,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+
 // Middleware
 if (!app.Environment.IsDevelopment())
 {
@@ -52,7 +56,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthentication();   

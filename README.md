@@ -44,7 +44,7 @@ mysql -u tuUsuario -p
 :tuContraseña
 ```
 
-_Luego dirigirse a la carpeta src y dentro de la carpeta Spotify.ReposDapper.Test_
+_Luego dirigirse a la carpeta src y dentro de la carpeta Spotify.src.SpotifyMVC
 
 1. Crear `appSettings.json`: nombre del archivo json que tiene que estar en la misma carpeta.
 El contenido del archivo tiene que ser:  
@@ -97,9 +97,20 @@ Para desplegar el proyecto, sigue los siguientes pasos:
      ``` bash
      cd ..
      ```
-   - Ejecuta el proyecto utilizando el siguiente comando:
+   - Entra al src:
+     ``` bash
+     cd src
+     ```
+   - Entra al proyecto mvc:
+     ``` bash
+     cd SpotifyMVC
+   - Ejecuta el proyecto utilizando el siguiente comando localmente:
      ```
      dotnet run
+     ```
+   - Ejecuta el proyecto pero permitiendo que las maquinas de tu red lan puedan interactuar con el proyecto:
+     ```
+      dotnet run --urls "http://0.0.0.0:5000"
      ```
 
 5. **Probar el proyecto**:
